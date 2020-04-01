@@ -32,7 +32,7 @@ public class GameScript : MonoBehaviour
         Debug.Log(deckPlayer_1[2].GetCardType());
         Debug.Log(deckPlayer_1[3].GetCardType());
 
-        DisplayCardList(deckPlayer_1);
+        //DisplayCardList(deckPlayer_1);
     }
 
     public Card GetCardFromCollection(int arg_cardIndex)
