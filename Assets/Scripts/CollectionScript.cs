@@ -5,8 +5,8 @@ using UnityEngine;
 public class CollectionScript : MonoBehaviour
 {
     private const int TOTAL_COLLECTION = 3;
-    [SerializeField] private Sprite[] cardDisplays = new Sprite[TOTAL_COLLECTION];
     private Card[] cardCollection = new Card[TOTAL_COLLECTION];
+    [SerializeField] private Sprite[] cardDisplays = new Sprite[TOTAL_COLLECTION];
 
     void Awake()
     {
