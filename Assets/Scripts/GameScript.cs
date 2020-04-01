@@ -25,23 +25,35 @@ public class GameScript : MonoBehaviour
         deckPlayer_1.Add(GetCardFromCollection(0));
         deckPlayer_1.Add(GetCardFromCollection(1));
         deckPlayer_1.Add(GetCardFromCollection(2));
-        Debug.Log(deckPlayer_1[0].GetName());
-        Debug.Log(deckPlayer_1[1].GetName());
-        Debug.Log(deckPlayer_1[2].GetName());
-        Debug.Log(deckPlayer_1[3].GetName());
+        deckPlayer_1.Add(GetCardFromCollection(1));
+        deckPlayer_1.Add(GetCardFromCollection(1));
+        Debug.Log(deckPlayer_1[0].GetCardType());
+        Debug.Log(deckPlayer_1[1].GetCardType());
+        Debug.Log(deckPlayer_1[2].GetCardType());
+        Debug.Log(deckPlayer_1[3].GetCardType());
 
         DisplayCardList(deckPlayer_1);
     }
 
     public Card GetCardFromCollection(int arg_cardIndex)
     {
-        Card returnCard = cardCollection.GetComponent<CollectionScript>().GetCardCollection()[arg_cardIndex];
-        return returnCard;
+        return cardCollection.GetComponent<CollectionScript>().GetCardCollection()[arg_cardIndex];
     }
 
     public void DisplayCardList(List<Card> arg_cardList)
     {
-        GameObject loc_instCard = Instantiate(cardPrefab, transform.position, transform.rotation) as GameObject;
-        loc_instCard.GetComponent<CardDisplayPrefabScript>().SetCard(arg_cardList[0]);
+        Vector3 loc_displayPosition = transform.position;
+        SpriteRenderer loc_cardDisplay;
+        int loc_cardCount = 0;
+
+        foreach (Card lp_card in arg_cardList)
+        {
+            GameObject loc_instCard = Instantiate(cardPrefab, loc_displayPosition, transform.rotation) as GameObject;
+            loc_instCard.GetComponent<CardDisplayPrefabScript>().SetCard(lp_card);
+            loc_cardDisplay = loc_instCard.GetComponent<SpriteRenderer>();
+            loc_displayPosition.x += 150;
+            loc_cardDisplay.sortingOrder = loc_cardCount;
+            loc_cardCount++;
+        }
     }
 }

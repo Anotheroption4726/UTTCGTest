@@ -13,6 +13,11 @@ public class CardDisplayPrefabScript : MonoBehaviour
         cardDisplay = GetComponent<SpriteRenderer>();
     }
 
+    public Card GetCard()
+    {
+        return card;
+    }
+
     public void SetCard(Card arg_card)
     {
         card = arg_card;

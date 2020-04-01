@@ -4,10 +4,19 @@ using UnityEngine;
 
 public abstract class Card
 {
-    //public int positionInDeck;
-
+    private cardTypesEnum cardType;
     private Sprite display;
     private string name;
+
+    public cardTypesEnum GetCardType()
+    {
+        return cardType;
+    }
+
+    public void SetCardType(cardTypesEnum arg_cardType)
+    {
+        cardType = arg_cardType;
+    }
 
     public Sprite GetDisplay()
     {
