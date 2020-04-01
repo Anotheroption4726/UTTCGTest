@@ -5,4 +5,7 @@ using UnityEngine;
 public enum traitsEnum
 {
     NULL,
+    Electric_Synthesize,
+    Mirroring,
+    Neutrality,
 };

@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Card_Temtem
+public class Card_Temtem : Card
 {
-    private Sprite display;
-
-    private string name;
-    private string cost;
+    private int cost;
 
     private typesEnum type_1;
     private typesEnum type_2;
@@ -27,10 +24,10 @@ public class Card_Temtem
     private typesEnum resistance_2;
     private typesEnum resistance_3;
 
-    public Card_Temtem(Sprite arg_display, string arg_name, string arg_cost, typesEnum arg_type_1, typesEnum arg_type_2, int arg_hp, int arg_atk, int arg_spd, int arg_sta, traitsEnum arg_trait, typesEnum arg_weakness_1, typesEnum arg_weakness_2, typesEnum arg_weakness_3, typesEnum arg_resistance_1, typesEnum arg_resistance_2, typesEnum arg_resistance_3)
+    public Card_Temtem(Sprite arg_display, string arg_name, int arg_cost, typesEnum arg_type_1, typesEnum arg_type_2, int arg_hp, int arg_atk, int arg_spd, int arg_sta, traitsEnum arg_trait, typesEnum arg_weakness_1, typesEnum arg_weakness_2, typesEnum arg_weakness_3, typesEnum arg_resistance_1, typesEnum arg_resistance_2, typesEnum arg_resistance_3)
     {
-        display = arg_display;
-        name = arg_name;
+        SetDisplay(arg_display);
+        SetName(arg_name);
         cost = arg_cost;
         type_1 = arg_type_1;
         type_2 = arg_type_2;
@@ -47,17 +44,7 @@ public class Card_Temtem
         resistance_3 = arg_resistance_3;
     }
 
-    public Sprite GetDisplay()
-    {
-        return display;
-    }
-
-    public string GetName()
-    {
-        return name;
-    }
-
-    public string GetCost()
+    public int GetCost()
     {
         return cost;
     }

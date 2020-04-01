@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Board_Deck : MonoBehaviour
+public class Board_Deck
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    const int TOTAL_DECK = 60;
+    [HideInInspector] public int currentTotal;
 
-    // Update is called once per frame
-    void Update()
+    List<Card> Cards;
+
+
+    public void ShuffleCards()
     {
-        
+
     }
 }
