@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameScript : MonoBehaviour
 {
     [SerializeField] private GameObject cardCollection;
+    [SerializeField] private GameObject cardPrefab;
 
     private List<Card> deckPlayer_1;
     private List<Card> trashPilePlayer_1;
@@ -28,6 +29,8 @@ public class GameScript : MonoBehaviour
         Debug.Log(deckPlayer_1[1].GetName());
         Debug.Log(deckPlayer_1[2].GetName());
         Debug.Log(deckPlayer_1[3].GetName());
+
+        DisplayCardList(deckPlayer_1);
     }
 
     public Card GetCardFromCollection(int arg_cardIndex)
@@ -38,6 +41,7 @@ public class GameScript : MonoBehaviour
 
     public void DisplayCardList(List<Card> arg_cardList)
     {
-
+        GameObject loc_instCard = Instantiate(cardPrefab, transform.position, transform.rotation) as GameObject;
+        loc_instCard.GetComponent<CardDisplayPrefabScript>().SetCard(arg_cardList[0]);
     }
 }
