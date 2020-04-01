@@ -22,17 +22,17 @@ public class GameScript : MonoBehaviour
     {
 
         deckPlayer_1.Add(GetCardFromCollection(0));
-        deckPlayer_1.Add(GetCardFromCollection(0));
-        deckPlayer_1.Add(GetCardFromCollection(1));
-        deckPlayer_1.Add(GetCardFromCollection(2));
-        deckPlayer_1.Add(GetCardFromCollection(1));
-        deckPlayer_1.Add(GetCardFromCollection(1));
-        Debug.Log(deckPlayer_1[0].GetCardType());
-        Debug.Log(deckPlayer_1[1].GetCardType());
-        Debug.Log(deckPlayer_1[2].GetCardType());
-        Debug.Log(deckPlayer_1[3].GetCardType());
+        //deckPlayer_1.Add(GetCardFromCollection(0));
+        //deckPlayer_1.Add(GetCardFromCollection(1));
+        //deckPlayer_1.Add(GetCardFromCollection(2));
+        //deckPlayer_1.Add(GetCardFromCollection(1));
+        //deckPlayer_1.Add(GetCardFromCollection(1));
+        //Debug.Log(deckPlayer_1[0].GetCardType());
+        //Debug.Log(deckPlayer_1[1].GetCardType());
+        //Debug.Log(deckPlayer_1[2].GetCardType());
+        //Debug.Log(deckPlayer_1[3].GetCardType());
 
-        //DisplayCardList(deckPlayer_1);
+        DisplayCardList(deckPlayer_1);
     }
 
     public Card GetCardFromCollection(int arg_cardIndex)
@@ -42,7 +42,7 @@ public class GameScript : MonoBehaviour
 
     public void DisplayCardList(List<Card> arg_cardList)
     {
-        Vector3 loc_displayPosition = transform.position;
+        Vector3 loc_displayPosition = new Vector3(0, 100, 0);
         SpriteRenderer loc_cardDisplay;
         int loc_cardCount = 0;
 
