@@ -220,7 +220,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -38}
+  m_AnchoredPosition: {x: 0, y: -88}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &108245178
@@ -415,8 +415,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -2, y: 12}
-  m_SizeDelta: {x: 200, y: 30}
+  m_AnchoredPosition: {x: -212, y: -38}
+  m_SizeDelta: {x: 270, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &249072834
 MonoBehaviour:
@@ -844,8 +844,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 208, y: 12}
-  m_SizeDelta: {x: 200, y: 30}
+  m_AnchoredPosition: {x: 138, y: -38}
+  m_SizeDelta: {x: 270, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &749317141
 MonoBehaviour:
@@ -1348,7 +1348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 210, y: -38}
+  m_AnchoredPosition: {x: 210, y: -88}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1124548363
@@ -1425,8 +1425,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -212, y: -88}
-  m_SizeDelta: {x: 620, y: 112.1}
+  m_AnchoredPosition: {x: -212, y: -138}
+  m_SizeDelta: {x: 620, y: 74}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1151725334
 MonoBehaviour:
@@ -1580,7 +1580,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: -210, y: -38}
+  m_AnchoredPosition: {x: -210, y: -88}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1274602989
@@ -1906,7 +1906,7 @@ GameObject:
   - component: {fileID: 1821414447}
   - component: {fileID: 1821414446}
   m_Layer: 5
-  m_Name: CardArtCredits
+  m_Name: CardCredits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1929,7 +1929,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 250, y: 0}
-  m_SizeDelta: {x: 200, y: 30}
+  m_SizeDelta: {x: 600, y: 30}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1821414446
 MonoBehaviour:

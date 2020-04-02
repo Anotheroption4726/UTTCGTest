@@ -7,6 +7,7 @@ public abstract class Card
     private cardTypesEnum cardType;
     private Sprite display;
     private string name;
+    private string credits;
 
     /*
     public Card(Sprite arg_display, string arg_name)
@@ -44,5 +45,15 @@ public abstract class Card
     public void SetName(string arg_name)
     {
         name = arg_name;
+    }
+
+    public string GetCredits()
+    {
+        return credits;
+    }
+
+    public void SetCredits(string arg_credits)
+    {
+        credits = arg_credits;
     }
 }
