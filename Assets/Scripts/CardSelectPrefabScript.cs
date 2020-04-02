@@ -14,6 +14,7 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     private Image cardDisplay;
     private Button selectCardButton;
+    private Button cardDetailCloseButton;
 
     private Image cardDetailDisplay;
     private Text cardDetailNameDisplay;
@@ -39,7 +40,6 @@ public class CardSelectPrefabScript : MonoBehaviour
         canvas = GameObject.Find("Canvas");
         outOfCanvasGameObject = GameObject.Find("OutOfCanvas");
         cardDetailView = GameObject.Find("CardDetailView");
-        //Debug.Log(GameObject.Find("CardDetailView"));
     }
 
     public void SetCard(Card arg_card)
@@ -65,6 +65,7 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDetailDisplay = GameObject.Find("CardDisplay").GetComponent<Image>();
         cardDetailNameDisplay = GameObject.Find("CardNameDisplay").GetComponent<Text>();
         cardDetailCreditsDisplay = GameObject.Find("CardCredits").GetComponent<Text>();
+        cardDetailCloseButton = GameObject.Find("CardDisplayCloseButton").GetComponent<Button>();
 
         if (card.GetCardType() == cardTypesEnum.Temtem)
         {
@@ -83,6 +84,7 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDetailDisplay.sprite = card.GetDisplay() as Sprite;
         cardDetailNameDisplay.text = "<b>Temtem:</b> " + card.GetName();
         cardDetailCreditsDisplay.text = "<b>Credits:</b> " + card.GetCredits();
+        cardDetailCloseButton.onClick.AddListener(CloseCardDetail);
 
         if (card.GetCardType() == cardTypesEnum.Temtem)
         {
@@ -97,5 +99,10 @@ public class CardSelectPrefabScript : MonoBehaviour
             cardTemtemDetailSTADisplay.text = "<b>STA:</b> " + cardTemtem.GetSta();
             cardTemtemDetailTraitDisplay.text = cardTemtem.GetTraitText();
         }
+    }
+
+    void CloseCardDetail()
+    {
+        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
     }
 }

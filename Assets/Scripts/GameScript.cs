@@ -21,16 +21,20 @@ public class GameScript : MonoBehaviour
     private void Start()
     {
         DeckInit();
+        ShuffleCardList(deckPlayer_1);
+        DisplayCardList(deckPlayer_1);
     }
 
     private void Update()
     {
+        /*
         if (Input.GetKeyDown("space"))
         {
             ClearCardList();
             ShuffleCardList(deckPlayer_1);
             DisplayCardList(deckPlayer_1);
         }
+        */
     }
 
     public void DeckInit ()
