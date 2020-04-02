@@ -11,14 +11,14 @@ public class CardSelectPrefabScript : MonoBehaviour
     private Image cardDisplay;
     private Button selectCardButton;
 
-    private GameObject cardDetailDisplay;
-    private Image cardDetailDisplay_image;
+    private Image cardDetailDisplay;
+    private Text cardDetailNameDisplay;
 
-    private GameObject cardDetailNameDisplay;
-    private Text cardDetailNameDisplay_content;
-
-    private GameObject cardTemtemDetailPansunsDisplay;
-    private Text cardTemtemDetailPansunsDisplay_content;
+    private Text cardTemtemDetailPansunsDisplay;
+    private Text cardTemtemDetailHPDisplay;
+    private Text cardTemtemDetailATKDisplay;
+    private Text cardTemtemDetailSPDDisplay;
+    private Text cardTemtemDetailSTADisplay;
 
     void Awake()
     {
@@ -26,14 +26,8 @@ public class CardSelectPrefabScript : MonoBehaviour
         selectCardButton = GetComponent<Button>();
         selectCardButton.onClick.AddListener(SelectCardForDetails);
 
-        cardDetailDisplay = GameObject.Find("CardDisplay");
-        cardDetailDisplay_image = cardDetailDisplay.GetComponent<Image>();
-
-        cardDetailNameDisplay = GameObject.Find("CardNameDisplay");
-        cardDetailNameDisplay_content = cardDetailNameDisplay.GetComponent<Text>();
-
-        cardTemtemDetailPansunsDisplay = GameObject.Find("CardPansunsDisplay");
-        cardTemtemDetailPansunsDisplay_content = cardTemtemDetailPansunsDisplay.GetComponent<Text>();
+        cardDetailDisplay = GameObject.Find("CardDisplay").GetComponent<Image>();
+        cardDetailNameDisplay = GameObject.Find("CardNameDisplay").GetComponent<Text>();
     }
 
     public void SetCard(Card arg_card)
@@ -44,6 +38,7 @@ public class CardSelectPrefabScript : MonoBehaviour
         if (card.GetCardType() == cardTypesEnum.Temtem)
         {
             cardTemtem = (Card_Temtem)card;
+            cardTemtemDetailPansunsDisplay = GameObject.Find("CardPansunsDisplay").GetComponent<Text>();
         }
     }
 
@@ -54,12 +49,12 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void SelectCardForDetails()
     {
-        cardDetailDisplay_image.sprite = card.GetDisplay() as Sprite;
-        cardDetailNameDisplay_content.text = "Temtem: " + card.GetName();
+        cardDetailDisplay.sprite = card.GetDisplay() as Sprite;
+        cardDetailNameDisplay.text = "Temtem: " + card.GetName();
 
         if (card.GetCardType() == cardTypesEnum.Temtem)
         {
-            cardTemtemDetailPansunsDisplay_content.text = "Pansuns: " + cardTemtem.GetPansuns();
+            cardTemtemDetailPansunsDisplay.text = "Pansuns: " + cardTemtem.GetPansuns();
         }
     }
 }
