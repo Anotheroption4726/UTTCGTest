@@ -9,19 +9,23 @@ public class CardSelectPrefabScript : MonoBehaviour
     private Image cardDisplay;
     private Button selectCardButton;
 
-    [SerializeField] private GameObject cardContentDisplay;
-    private Image cardContentImgDisplay;
-    private Text cardContentNameDisplay;
+    private GameObject cardDetailDisplay;
+    private Image cardDetailDisplay_image;
+
+    private GameObject cardDetailNameDisplay;
+    private Text cardDetailNameDisplay_content;
 
     void Awake()
     {
         cardDisplay = GetComponent<Image>();
         selectCardButton = GetComponent<Button>();
-        selectCardButton.onClick.AddListener(SelectCard);
+        selectCardButton.onClick.AddListener(SelectCardForDetails);
 
-        cardContentDisplay = GameObject.Find("CardNameDisplay");
-        cardContentImgDisplay = cardContentDisplay.GetComponent<Image>();
-        cardContentNameDisplay = cardContentDisplay.GetComponent<Text>();
+        cardDetailDisplay = GameObject.Find("CardDisplay");
+        cardDetailDisplay_image = cardDetailDisplay.GetComponent<Image>();
+
+        cardDetailNameDisplay = GameObject.Find("CardNameDisplay");
+        cardDetailNameDisplay_content = cardDetailNameDisplay.GetComponent<Text>();
     }
 
     public void SetCard(Card arg_card)
@@ -35,9 +39,11 @@ public class CardSelectPrefabScript : MonoBehaviour
         return card;
     }
 
-    void SelectCard()
+    void SelectCardForDetails()
     {
-        //cardContentImgDisplay.sprite = card.GetDisplay();
-        cardContentNameDisplay.text = card.GetName();
+        //cardContentImgDisplay.sprite = card.GetDisplay() as Sprite;
+        //cardContentImgDisplay.sprite = Resources.Load<Sprite>("Cards/Temtem_Barnshe");
+        cardDetailDisplay_image.sprite = card.GetDisplay() as Sprite;
+        cardDetailNameDisplay_content.text = card.GetName();
     }
 }
