@@ -8,6 +8,8 @@ public abstract class Card
     private Sprite display;
     private string name;
     private string credits;
+    private cardSetEnum set;
+    private cardRarityEnum rarity;
 
     /*
     public Card(Sprite arg_display, string arg_name)
@@ -55,5 +57,25 @@ public abstract class Card
     public void SetCredits(string arg_credits)
     {
         credits = arg_credits;
+    }
+
+    public cardSetEnum GetCardSet()
+    {
+        return set;
+    }
+
+    public void SetCardSet(cardSetEnum arg_cardSet)
+    {
+        set = arg_cardSet;
+    }
+
+    public cardRarityEnum GetCardRarity()
+    {
+        return rarity;
+    }
+
+    public void SetCardRarity(cardRarityEnum arg_cardRarity)
+    {
+        rarity = arg_cardRarity;
     }
 }
