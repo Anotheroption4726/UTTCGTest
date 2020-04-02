@@ -8,6 +8,8 @@ public class CardSelectPrefabScript : MonoBehaviour
     private Card card;
     Card_Temtem cardTemtem;
 
+    [SerializeField] private GameObject cardDetailView;
+
     private Image cardDisplay;
     private Button selectCardButton;
 
@@ -31,6 +33,8 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDisplay = GetComponent<Image>();
         selectCardButton = GetComponent<Button>();
         selectCardButton.onClick.AddListener(SelectCardForDetails);
+
+        cardDetailView = GameObject.Find("CardDetailView");
 
         cardDetailDisplay = GameObject.Find("CardDisplay").GetComponent<Image>();
         cardDetailNameDisplay = GameObject.Find("CardNameDisplay").GetComponent<Text>();
@@ -65,6 +69,8 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void SelectCardForDetails()
     {
+        cardDetailView.SetActive(true);
+
         cardDetailDisplay.sprite = card.GetDisplay() as Sprite;
         cardDetailNameDisplay.text = "<b>Temtem:</b> " + card.GetName();
         cardDetailCreditsDisplay.text = "<b>Credits:</b> " + card.GetCredits();
