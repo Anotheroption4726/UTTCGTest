@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CardSelectPrefabScript : MonoBehaviour
 {
     private Card card;
+    Card_Temtem cardTemtem;
 
     private Image cardDisplay;
     private Button selectCardButton;
@@ -16,8 +17,8 @@ public class CardSelectPrefabScript : MonoBehaviour
     private GameObject cardDetailNameDisplay;
     private Text cardDetailNameDisplay_content;
 
-    private GameObject cardDetailPansunsDisplay;
-    private Text cardDetailPansunsDisplay_content;
+    private GameObject cardTemtemDetailPansunsDisplay;
+    private Text cardTemtemDetailPansunsDisplay_content;
 
     void Awake()
     {
@@ -31,14 +32,19 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDetailNameDisplay = GameObject.Find("CardNameDisplay");
         cardDetailNameDisplay_content = cardDetailNameDisplay.GetComponent<Text>();
 
-        cardDetailPansunsDisplay = GameObject.Find("CardPansunsDisplay");
-        cardDetailPansunsDisplay_content = cardDetailNameDisplay.GetComponent<Text>();
+        cardTemtemDetailPansunsDisplay = GameObject.Find("CardPansunsDisplay");
+        cardTemtemDetailPansunsDisplay_content = cardTemtemDetailPansunsDisplay.GetComponent<Text>();
     }
 
     public void SetCard(Card arg_card)
     {
         card = arg_card;
         cardDisplay.sprite = card.GetDisplay();
+
+        if (card.GetCardType() == cardTypesEnum.Temtem)
+        {
+            cardTemtem = (Card_Temtem)card;
+        }
     }
 
     public Card GetCard()
@@ -50,6 +56,10 @@ public class CardSelectPrefabScript : MonoBehaviour
     {
         cardDetailDisplay_image.sprite = card.GetDisplay() as Sprite;
         cardDetailNameDisplay_content.text = "Temtem: " + card.GetName();
-        //cardDetailPansunsDisplay_content.text = "Pansuns: " + card.GetCost();
+
+        if (card.GetCardType() == cardTypesEnum.Temtem)
+        {
+            cardTemtemDetailPansunsDisplay_content.text = "Pansuns: " + cardTemtem.GetPansuns();
+        }
     }
 }

@@ -8,6 +8,14 @@ public abstract class Card
     private Sprite display;
     private string name;
 
+    /*
+    public Card(Sprite arg_display, string arg_name)
+    {
+        display = arg_display;
+        name = arg_name;
+    }
+    */
+
     public cardTypesEnum GetCardType()
     {
         return cardType;
