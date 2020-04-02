@@ -8,7 +8,9 @@ public class CardSelectPrefabScript : MonoBehaviour
     private Card card;
     Card_Temtem cardTemtem;
 
-    [SerializeField] private GameObject cardDetailView;
+    private GameObject canvas;
+    private GameObject outOfCanvasGameObject;
+    private GameObject cardDetailView;
 
     private Image cardDisplay;
     private Button selectCardButton;
@@ -34,11 +36,10 @@ public class CardSelectPrefabScript : MonoBehaviour
         selectCardButton = GetComponent<Button>();
         selectCardButton.onClick.AddListener(SelectCardForDetails);
 
+        canvas = GameObject.Find("Canvas");
+        outOfCanvasGameObject = GameObject.Find("OutOfCanvas");
         cardDetailView = GameObject.Find("CardDetailView");
-
-        cardDetailDisplay = GameObject.Find("CardDisplay").GetComponent<Image>();
-        cardDetailNameDisplay = GameObject.Find("CardNameDisplay").GetComponent<Text>();
-        cardDetailCreditsDisplay = GameObject.Find("CardCredits").GetComponent<Text>();
+        //Debug.Log(GameObject.Find("CardDetailView"));
     }
 
     public void SetCard(Card arg_card)
@@ -49,6 +50,24 @@ public class CardSelectPrefabScript : MonoBehaviour
         if (card.GetCardType() == cardTypesEnum.Temtem)
         {
             cardTemtem = (Card_Temtem)card;
+        }
+    }
+
+    public Card GetCard()
+    {
+        return card;
+    }
+
+    void SelectCardForDetails()
+    {
+        cardDetailView.transform.SetParent(canvas.transform, true);
+
+        cardDetailDisplay = GameObject.Find("CardDisplay").GetComponent<Image>();
+        cardDetailNameDisplay = GameObject.Find("CardNameDisplay").GetComponent<Text>();
+        cardDetailCreditsDisplay = GameObject.Find("CardCredits").GetComponent<Text>();
+
+        if (card.GetCardType() == cardTypesEnum.Temtem)
+        {
             cardTemtemDetailPansunsDisplay = GameObject.Find("CardPansunsDisplay").GetComponent<Text>();
             cardTemtemDetailType_1Display = GameObject.Find("CardType_1Display").GetComponent<Text>();
             cardTemtemDetailType_2Display = GameObject.Find("CardType_2Display").GetComponent<Text>();
@@ -59,17 +78,7 @@ public class CardSelectPrefabScript : MonoBehaviour
             cardTemtemDetailSPDDisplay = GameObject.Find("CardSPDDisplay").GetComponent<Text>();
             cardTemtemDetailSTADisplay = GameObject.Find("CardSTADisplay").GetComponent<Text>();
             cardTemtemDetailTraitDisplay = GameObject.Find("CardTraitDisplay").GetComponent<Text>();
-}
-    }
-
-    public Card GetCard()
-    {
-        return card;
-    }
-
-    void SelectCardForDetails()
-    {
-        cardDetailView.SetActive(true);
+        }
 
         cardDetailDisplay.sprite = card.GetDisplay() as Sprite;
         cardDetailNameDisplay.text = "<b>Temtem:</b> " + card.GetName();
