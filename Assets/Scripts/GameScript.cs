@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class GameScript : MonoBehaviour
 {
-    [SerializeField] private GameObject cardCollection;
-
-    [SerializeField] private GameObject cardPrefab;
-
     [SerializeField] private GameObject cardListDisplay;
     [SerializeField] private GameObject CardSelectPrefab;
 
@@ -37,18 +33,28 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public Card GetCardFromCollection(int arg_cardIndex)
-    {
-        return cardCollection.GetComponent<CollectionScript>().GetCardCollection()[arg_cardIndex];
-    }
-
     public List<Card> DeckInit ()
     {
         List<Card> deck = new List<Card>();
 
-        deckPlayer_1.Add(GetCardFromCollection(0));
-        deckPlayer_1.Add(GetCardFromCollection(1));
-        deckPlayer_1.Add(GetCardFromCollection(2));
+        deckPlayer_1.Add(CardCollection.GetCard(0));
+        deckPlayer_1.Add(CardCollection.GetCard(1));
+        deckPlayer_1.Add(CardCollection.GetCard(2));
+        deckPlayer_1.Add(CardCollection.GetCard(0));
+        deckPlayer_1.Add(CardCollection.GetCard(1));
+        deckPlayer_1.Add(CardCollection.GetCard(2));
+        deckPlayer_1.Add(CardCollection.GetCard(0));
+        deckPlayer_1.Add(CardCollection.GetCard(1));
+        deckPlayer_1.Add(CardCollection.GetCard(2));
+        deckPlayer_1.Add(CardCollection.GetCard(0));
+        deckPlayer_1.Add(CardCollection.GetCard(1));
+        deckPlayer_1.Add(CardCollection.GetCard(2));
+        deckPlayer_1.Add(CardCollection.GetCard(0));
+        deckPlayer_1.Add(CardCollection.GetCard(1));
+        deckPlayer_1.Add(CardCollection.GetCard(2));
+        deckPlayer_1.Add(CardCollection.GetCard(0));
+        deckPlayer_1.Add(CardCollection.GetCard(1));
+        deckPlayer_1.Add(CardCollection.GetCard(2));
 
         return deck;
     }
