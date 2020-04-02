@@ -24,6 +24,7 @@ public class CardSelectPrefabScript : MonoBehaviour
     private Text cardTemtemDetailATKDisplay;
     private Text cardTemtemDetailSPDDisplay;
     private Text cardTemtemDetailSTADisplay;
+    private Text cardTemtemDetailTraitDisplay;
 
     void Awake()
     {
@@ -53,6 +54,7 @@ public class CardSelectPrefabScript : MonoBehaviour
             cardTemtemDetailATKDisplay = GameObject.Find("CardATKDisplay").GetComponent<Text>();
             cardTemtemDetailSPDDisplay = GameObject.Find("CardSPDDisplay").GetComponent<Text>();
             cardTemtemDetailSTADisplay = GameObject.Find("CardSTADisplay").GetComponent<Text>();
+            cardTemtemDetailTraitDisplay = GameObject.Find("CardTraitDisplay").GetComponent<Text>();
 }
     }
 
@@ -78,6 +80,7 @@ public class CardSelectPrefabScript : MonoBehaviour
             cardTemtemDetailATKDisplay.text = "<b>ATK:</b> " + cardTemtem.GetAtk();
             cardTemtemDetailSPDDisplay.text = "<b>SPD:</b> " + cardTemtem.GetSpd();
             cardTemtemDetailSTADisplay.text = "<b>STA:</b> " + cardTemtem.GetSta();
+            cardTemtemDetailTraitDisplay.text = cardTemtem.GetTraitText();
         }
     }
 }

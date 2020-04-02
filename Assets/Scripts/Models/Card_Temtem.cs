@@ -15,6 +15,7 @@ public class Card_Temtem : Card
     private int sta;
 
     private traitsEnum trait;
+    private string traitText;
 
     private elementTypesEnum weakness_1;
     private elementTypesEnum weakness_2;
@@ -24,7 +25,28 @@ public class Card_Temtem : Card
     private elementTypesEnum resistance_2;
     private elementTypesEnum resistance_3;
 
-    public Card_Temtem(Sprite arg_display, string arg_name, string arg_credits, cardSetEnum arg_cardSet, cardRarityEnum arg_cardRarity, int arg_pansuns, elementTypesEnum arg_type_1, elementTypesEnum arg_type_2, int arg_hp, int arg_atk, int arg_spd, int arg_sta, traitsEnum arg_trait, elementTypesEnum arg_weakness_1, elementTypesEnum arg_weakness_2, elementTypesEnum arg_weakness_3, elementTypesEnum arg_resistance_1, elementTypesEnum arg_resistance_2, elementTypesEnum arg_resistance_3)
+    public Card_Temtem(
+        Sprite arg_display,
+        string arg_name,
+        string arg_credits,
+        cardSetEnum arg_cardSet,
+        cardRarityEnum arg_cardRarity,
+        int arg_pansuns,
+        elementTypesEnum arg_type_1,
+        elementTypesEnum arg_type_2,
+        int arg_hp,
+        int arg_atk,
+        int arg_spd,
+        int arg_sta,
+        traitsEnum arg_trait,
+        string arg_traitText,
+        elementTypesEnum arg_weakness_1,
+        elementTypesEnum arg_weakness_2,
+        elementTypesEnum arg_weakness_3,
+        elementTypesEnum arg_resistance_1,
+        elementTypesEnum arg_resistance_2,
+        elementTypesEnum arg_resistance_3
+    )
     {
         SetCardType(cardTypesEnum.Temtem);
         SetDisplay(arg_display);
@@ -40,6 +62,7 @@ public class Card_Temtem : Card
         spd = arg_spd;
         sta = arg_sta;
         trait = arg_trait;
+        traitText = arg_traitText;
         weakness_1 = arg_weakness_1;
         weakness_2 = arg_weakness_2;
         weakness_3 = arg_weakness_3;
@@ -86,6 +109,11 @@ public class Card_Temtem : Card
     public traitsEnum GetTrait()
     {
         return trait;
+    }
+
+    public string GetTraitText()
+    {
+        return traitText;
     }
 
     public elementTypesEnum GetWeakness_1()
