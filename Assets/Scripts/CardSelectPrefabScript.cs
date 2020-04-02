@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CardSelectPrefabScript : MonoBehaviour
 {
     private Card card;
+
     private Image cardDisplay;
     private Button selectCardButton;
 
@@ -14,6 +15,9 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     private GameObject cardDetailNameDisplay;
     private Text cardDetailNameDisplay_content;
+
+    private GameObject cardDetailPansunsDisplay;
+    private Text cardDetailPansunsDisplay_content;
 
     void Awake()
     {
@@ -26,6 +30,9 @@ public class CardSelectPrefabScript : MonoBehaviour
 
         cardDetailNameDisplay = GameObject.Find("CardNameDisplay");
         cardDetailNameDisplay_content = cardDetailNameDisplay.GetComponent<Text>();
+
+        cardDetailPansunsDisplay = GameObject.Find("CardPansunsDisplay");
+        cardDetailPansunsDisplay_content = cardDetailNameDisplay.GetComponent<Text>();
     }
 
     public void SetCard(Card arg_card)
@@ -41,9 +48,8 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void SelectCardForDetails()
     {
-        //cardContentImgDisplay.sprite = card.GetDisplay() as Sprite;
-        //cardContentImgDisplay.sprite = Resources.Load<Sprite>("Cards/Temtem_Barnshe");
         cardDetailDisplay_image.sprite = card.GetDisplay() as Sprite;
-        cardDetailNameDisplay_content.text = card.GetName();
+        cardDetailNameDisplay_content.text = "Temtem: " + card.GetName();
+        //cardDetailPansunsDisplay_content.text = "Pansuns: " + card.GetCost();
     }
 }

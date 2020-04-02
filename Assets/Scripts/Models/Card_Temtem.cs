@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Card_Temtem : Card
 {
-    private int cost;
+    private int pansuns;
 
     private elementTypesEnum type_1;
     private elementTypesEnum type_2;
@@ -24,12 +24,12 @@ public class Card_Temtem : Card
     private elementTypesEnum resistance_2;
     private elementTypesEnum resistance_3;
 
-    public Card_Temtem(Sprite arg_display, string arg_name, int arg_cost, elementTypesEnum arg_type_1, elementTypesEnum arg_type_2, int arg_hp, int arg_atk, int arg_spd, int arg_sta, traitsEnum arg_trait, elementTypesEnum arg_weakness_1, elementTypesEnum arg_weakness_2, elementTypesEnum arg_weakness_3, elementTypesEnum arg_resistance_1, elementTypesEnum arg_resistance_2, elementTypesEnum arg_resistance_3)
+    public Card_Temtem(Sprite arg_display, string arg_name, int arg_pansuns, elementTypesEnum arg_type_1, elementTypesEnum arg_type_2, int arg_hp, int arg_atk, int arg_spd, int arg_sta, traitsEnum arg_trait, elementTypesEnum arg_weakness_1, elementTypesEnum arg_weakness_2, elementTypesEnum arg_weakness_3, elementTypesEnum arg_resistance_1, elementTypesEnum arg_resistance_2, elementTypesEnum arg_resistance_3)
     {
         SetCardType(cardTypesEnum.Temtem);
         SetDisplay(arg_display);
         SetName(arg_name);
-        cost = arg_cost;
+        pansuns = arg_pansuns;
         type_1 = arg_type_1;
         type_2 = arg_type_2;
         hp = arg_hp;
@@ -45,9 +45,9 @@ public class Card_Temtem : Card
         resistance_3 = arg_resistance_3;
     }
 
-    public int GetCost()
+    public virtual int GetPansuns()
     {
-        return cost;
+        return pansuns;
     }
 
     public elementTypesEnum GetType_1()
