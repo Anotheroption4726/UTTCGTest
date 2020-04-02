@@ -23,8 +23,22 @@ public static class CardCollection
         return cardCollection;
     }
 
-    public static Card GetCard(int arg_cardIndex)
+    public static Card GetCardbyIndex(int arg_cardIndex)
     {
         return cardCollection[arg_cardIndex];
+    }
+
+    public static Card GetCardbyName(string arg_cardName)
+    {
+        foreach (Card card in cardCollection)
+        {
+            if (card.GetName().Equals(arg_cardName))
+            {
+                return card;
+            }
+        }
+
+        Debug.Log("The card " + arg_cardName + " doesn't exist.");
+        return null;
     }
 }

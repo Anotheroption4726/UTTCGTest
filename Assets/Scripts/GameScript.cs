@@ -33,30 +33,19 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public List<Card> DeckInit ()
+    public void DeckInit ()
     {
-        List<Card> deck = new List<Card>();
+        AddCardsByNameToList(deckPlayer_1, "Nessla", 20);
+        AddCardsByNameToList(deckPlayer_1, "Barnshe", 20);
+        AddCardsByNameToList(deckPlayer_1, "Gyalis", 20);
+    }
 
-        deckPlayer_1.Add(CardCollection.GetCard(0));
-        deckPlayer_1.Add(CardCollection.GetCard(1));
-        deckPlayer_1.Add(CardCollection.GetCard(2));
-        deckPlayer_1.Add(CardCollection.GetCard(0));
-        deckPlayer_1.Add(CardCollection.GetCard(1));
-        deckPlayer_1.Add(CardCollection.GetCard(2));
-        deckPlayer_1.Add(CardCollection.GetCard(0));
-        deckPlayer_1.Add(CardCollection.GetCard(1));
-        deckPlayer_1.Add(CardCollection.GetCard(2));
-        deckPlayer_1.Add(CardCollection.GetCard(0));
-        deckPlayer_1.Add(CardCollection.GetCard(1));
-        deckPlayer_1.Add(CardCollection.GetCard(2));
-        deckPlayer_1.Add(CardCollection.GetCard(0));
-        deckPlayer_1.Add(CardCollection.GetCard(1));
-        deckPlayer_1.Add(CardCollection.GetCard(2));
-        deckPlayer_1.Add(CardCollection.GetCard(0));
-        deckPlayer_1.Add(CardCollection.GetCard(1));
-        deckPlayer_1.Add(CardCollection.GetCard(2));
-
-        return deck;
+    public void AddCardsByNameToList(List<Card> arg_cardList, string arg_card, int arg_quantity)
+    {
+       for (int i = 0; i < arg_quantity; i++)
+       {
+            arg_cardList.Add(CardCollection.GetCardbyName(arg_card));
+        }
     }
 
     public void DisplayCardList(List<Card> arg_cardList)
