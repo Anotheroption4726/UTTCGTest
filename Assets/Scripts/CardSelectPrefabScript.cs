@@ -37,7 +37,7 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void SelectCard()
     {
-        cardContentImgDisplay.sprite = card.GetDisplay();
+        //cardContentImgDisplay.sprite = card.GetDisplay();
         cardContentNameDisplay.text = card.GetName();
     }
 }

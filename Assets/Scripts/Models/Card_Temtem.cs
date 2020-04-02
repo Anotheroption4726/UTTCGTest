@@ -6,8 +6,8 @@ public class Card_Temtem : Card
 {
     private int cost;
 
-    private elementalTypesEnum type_1;
-    private elementalTypesEnum type_2;
+    private elementTypesEnum type_1;
+    private elementTypesEnum type_2;
 
     private int hp;
     private int atk;
@@ -16,15 +16,15 @@ public class Card_Temtem : Card
 
     private traitsEnum trait;
 
-    private elementalTypesEnum weakness_1;
-    private elementalTypesEnum weakness_2;
-    private elementalTypesEnum weakness_3;
+    private elementTypesEnum weakness_1;
+    private elementTypesEnum weakness_2;
+    private elementTypesEnum weakness_3;
 
-    private elementalTypesEnum resistance_1;
-    private elementalTypesEnum resistance_2;
-    private elementalTypesEnum resistance_3;
+    private elementTypesEnum resistance_1;
+    private elementTypesEnum resistance_2;
+    private elementTypesEnum resistance_3;
 
-    public Card_Temtem(Sprite arg_display, string arg_name, int arg_cost, elementalTypesEnum arg_type_1, elementalTypesEnum arg_type_2, int arg_hp, int arg_atk, int arg_spd, int arg_sta, traitsEnum arg_trait, elementalTypesEnum arg_weakness_1, elementalTypesEnum arg_weakness_2, elementalTypesEnum arg_weakness_3, elementalTypesEnum arg_resistance_1, elementalTypesEnum arg_resistance_2, elementalTypesEnum arg_resistance_3)
+    public Card_Temtem(Sprite arg_display, string arg_name, int arg_cost, elementTypesEnum arg_type_1, elementTypesEnum arg_type_2, int arg_hp, int arg_atk, int arg_spd, int arg_sta, traitsEnum arg_trait, elementTypesEnum arg_weakness_1, elementTypesEnum arg_weakness_2, elementTypesEnum arg_weakness_3, elementTypesEnum arg_resistance_1, elementTypesEnum arg_resistance_2, elementTypesEnum arg_resistance_3)
     {
         SetCardType(cardTypesEnum.Temtem);
         SetDisplay(arg_display);
@@ -50,12 +50,12 @@ public class Card_Temtem : Card
         return cost;
     }
 
-    public elementalTypesEnum GetType_1()
+    public elementTypesEnum GetType_1()
     {
         return type_1;
     }
 
-    public elementalTypesEnum GetType_2()
+    public elementTypesEnum GetType_2()
     {
         return type_2;
     }
@@ -85,32 +85,32 @@ public class Card_Temtem : Card
         return trait;
     }
 
-    public elementalTypesEnum GetWeakness_1()
+    public elementTypesEnum GetWeakness_1()
     {
         return weakness_1;
     }
 
-    public elementalTypesEnum GetWeakness_2()
+    public elementTypesEnum GetWeakness_2()
     {
         return weakness_2;
     }
 
-    public elementalTypesEnum GetWeakness_3()
+    public elementTypesEnum GetWeakness_3()
     {
         return weakness_3;
     }
 
-    public elementalTypesEnum GetResistance_1()
+    public elementTypesEnum GetResistance_1()
     {
         return resistance_1;
     }
 
-    public elementalTypesEnum GetResistance_2()
+    public elementTypesEnum GetResistance_2()
     {
         return resistance_2;
     }
 
-    public elementalTypesEnum GetResistance_3()
+    public elementTypesEnum GetResistance_3()
     {
         return resistance_3;
     }

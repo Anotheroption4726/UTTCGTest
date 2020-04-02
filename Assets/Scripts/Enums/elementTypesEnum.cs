@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum elementalTypesEnum
+public enum elementTypesEnum
 {
     NULL,
     Crystal,
