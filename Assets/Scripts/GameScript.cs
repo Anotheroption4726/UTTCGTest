@@ -18,8 +18,8 @@ public class GameScript : MonoBehaviour
 
     private void Awake()
     {
-        deckPlayerButton.onClick.AddListener(() => 
-        { 
+        deckPlayerButton.onClick.AddListener(() =>
+        {
             DisplayCardList(deckTamer_1);
         });
 
@@ -42,21 +42,20 @@ public class GameScript : MonoBehaviour
     {
         DeckInit();
         ShuffleCardList(deckTamer_1);
-        AddCardsByNameFromCollectionToList(handTamer_1, "Nessla", 1, true);
+        DrawCardFromListAddToOtherList(deckTamer_1, handTamer_1, 5, true);
         DisplayCardList(handTamer_1);
     }
 
     private void Update()
     {
-        /*
         if (Input.GetKeyDown("space"))
         {
-
+            DrawCardFromListAddToOtherList(deckTamer_1, handTamer_1, 1, true);
+            DisplayCardList(handTamer_1);
         }
-        */
     }
 
-    public void DeckInit ()
+    public void DeckInit()
     {
         AddCardsByNameFromCollectionToList(deckTamer_1, "Nessla", 20, false);
         AddCardsByNameFromCollectionToList(deckTamer_1, "Barnshe", 20, false);
@@ -111,4 +110,18 @@ public class GameScript : MonoBehaviour
             arg_cardList[randomIndex] = temp;
         }
     }
+
+    public void DrawCardFromListAddToOtherList(List<Card> arg_cardListDraw, List<Card> arg_cardListCollect, int arg_quantity, bool arg_uncovered)
+    {
+        Card loc_cardDraw;
+
+        for (int i = 0; i < arg_quantity; i++)
+        {
+            loc_cardDraw = arg_cardListDraw[0];
+            loc_cardDraw.setUncoveredStatus(arg_uncovered);
+            arg_cardListCollect.Add(loc_cardDraw);
+            arg_cardListDraw.RemoveAt(0);
+        }
+    }
+
 }
