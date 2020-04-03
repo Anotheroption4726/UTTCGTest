@@ -111,16 +111,19 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public void DrawCardFromListAddToOtherList(List<Card> arg_cardListDraw, List<Card> arg_cardListCollect, int arg_quantity, bool arg_uncovered)
+    public void DrawCardFromListAddToOtherList(List<Card> arg_cardListDraw, List<Card> arg_cardListReceive, int arg_quantity, bool arg_uncovered)
     {
         Card loc_cardDraw;
 
         for (int i = 0; i < arg_quantity; i++)
         {
-            loc_cardDraw = arg_cardListDraw[0];
-            loc_cardDraw.setUncoveredStatus(arg_uncovered);
-            arg_cardListCollect.Add(loc_cardDraw);
-            arg_cardListDraw.RemoveAt(0);
+            if (arg_cardListDraw.Count > 0)
+            {
+                loc_cardDraw = arg_cardListDraw[0];
+                loc_cardDraw.setUncoveredStatus(arg_uncovered);
+                arg_cardListReceive.Add(loc_cardDraw);
+                arg_cardListDraw.RemoveAt(0);
+            }
         }
     }
 
