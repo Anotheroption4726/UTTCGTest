@@ -1,28 +1,49 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour
 {
+    [SerializeField] private Button deckPlayerButton;
+    [SerializeField] private Button trashPilePlayerButton;
+    [SerializeField] private Button handPlayerButton;
+
     [SerializeField] private GameObject cardListDisplay;
     [SerializeField] private GameObject CardSelectPrefab;
 
-    private List<Card> deckPlayer_1;
-    private List<Card> trashPilePlayer_1;
-    private List<Card> handPlayer_1;
+    public List<Card> deckTamer_1;
+    private List<Card> trashPileTamer_1;
+    public List<Card> handTamer_1;
 
     private void Awake()
     {
-        deckPlayer_1 = new List<Card>();
-        trashPilePlayer_1 = new List<Card>();
-        handPlayer_1 = new List<Card>();
+        deckPlayerButton.onClick.AddListener(() => 
+        { 
+            DisplayCardList(deckTamer_1);
+        });
+
+        trashPilePlayerButton.onClick.AddListener(() =>
+        {
+            DisplayCardList(trashPileTamer_1);
+        });
+
+        handPlayerButton.onClick.AddListener(() =>
+        {
+            DisplayCardList(handTamer_1);
+        });
+
+        deckTamer_1 = new List<Card>();
+        trashPileTamer_1 = new List<Card>();
+        handTamer_1 = new List<Card>();
     }
 
     private void Start()
     {
         DeckInit();
-        ShuffleCardList(deckPlayer_1);
-        DisplayCardList(deckPlayer_1);
+        ShuffleCardList(deckTamer_1);
+        AddCardsByNameToList(handTamer_1, "Nessla", 1);
+        DisplayCardList(handTamer_1);
     }
 
     private void Update()
@@ -30,18 +51,16 @@ public class GameScript : MonoBehaviour
         /*
         if (Input.GetKeyDown("space"))
         {
-            ClearCardList();
-            ShuffleCardList(deckPlayer_1);
-            DisplayCardList(deckPlayer_1);
+
         }
         */
     }
 
     public void DeckInit ()
     {
-        AddCardsByNameToList(deckPlayer_1, "Nessla", 20);
-        AddCardsByNameToList(deckPlayer_1, "Barnshe", 20);
-        AddCardsByNameToList(deckPlayer_1, "Gyalis", 20);
+        AddCardsByNameToList(deckTamer_1, "Nessla", 20);
+        AddCardsByNameToList(deckTamer_1, "Barnshe", 20);
+        AddCardsByNameToList(deckTamer_1, "Gyalis", 20);
     }
 
     public void AddCardsByNameToList(List<Card> arg_cardList, string arg_card, int arg_quantity)
@@ -54,6 +73,8 @@ public class GameScript : MonoBehaviour
 
     public void DisplayCardList(List<Card> arg_cardList)
     {
+        ClearCardList();
+
         foreach (Card lp_card in arg_cardList)
         {
             GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;

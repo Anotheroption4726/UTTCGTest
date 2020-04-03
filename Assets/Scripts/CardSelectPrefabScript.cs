@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class CardSelectPrefabScript : MonoBehaviour
 {
-    private Card card;
-    Card_Temtem cardTemtem;
-
     private GameObject canvas;
     private GameObject outOfCanvasGameObject;
+    private GameObject BoardView;
     private GameObject cardDetailView;
+
+    private Card card;
+    private Card_Temtem cardTemtem;
 
     private Image cardDisplay;
     private Button selectCardButton;
@@ -39,6 +40,7 @@ public class CardSelectPrefabScript : MonoBehaviour
 
         canvas = GameObject.Find("Canvas");
         outOfCanvasGameObject = GameObject.Find("OutOfCanvas");
+        BoardView = GameObject.Find("BoardView");
         cardDetailView = GameObject.Find("CardDetailView");
     }
 
@@ -61,11 +63,17 @@ public class CardSelectPrefabScript : MonoBehaviour
     void SelectCardForDetails()
     {
         cardDetailView.transform.SetParent(canvas.transform, true);
+        BoardView.transform.SetParent(outOfCanvasGameObject.transform, true);
 
         cardDetailDisplay = GameObject.Find("CardDisplay").GetComponent<Image>();
         cardDetailNameDisplay = GameObject.Find("CardNameDisplay").GetComponent<Text>();
         cardDetailCreditsDisplay = GameObject.Find("CardCredits").GetComponent<Text>();
         cardDetailCloseButton = GameObject.Find("CardDisplayCloseButton").GetComponent<Button>();
+
+        cardDetailDisplay.sprite = card.GetDisplay() as Sprite;
+        cardDetailNameDisplay.text = "<b>Temtem:</b> " + card.GetName();
+        cardDetailCreditsDisplay.text = "<b>Credits:</b> " + card.GetCredits();
+        cardDetailCloseButton.onClick.AddListener(CloseCardDetail);
 
         if (card.GetCardType() == cardTypesEnum.Temtem)
         {
@@ -79,15 +87,7 @@ public class CardSelectPrefabScript : MonoBehaviour
             cardTemtemDetailSPDDisplay = GameObject.Find("CardSPDDisplay").GetComponent<Text>();
             cardTemtemDetailSTADisplay = GameObject.Find("CardSTADisplay").GetComponent<Text>();
             cardTemtemDetailTraitDisplay = GameObject.Find("CardTraitDisplay").GetComponent<Text>();
-        }
 
-        cardDetailDisplay.sprite = card.GetDisplay() as Sprite;
-        cardDetailNameDisplay.text = "<b>Temtem:</b> " + card.GetName();
-        cardDetailCreditsDisplay.text = "<b>Credits:</b> " + card.GetCredits();
-        cardDetailCloseButton.onClick.AddListener(CloseCardDetail);
-
-        if (card.GetCardType() == cardTypesEnum.Temtem)
-        {
             cardTemtemDetailPansunsDisplay.text = "<b>Pansuns</b>: " + cardTemtem.GetPansuns();
             cardTemtemDetailType_1Display.text = "<b>Type 1:</b> " + cardTemtem.GetType_1();
             cardTemtemDetailType_2Display.text = "<b>Type 2:</b> " + cardTemtem.GetType_2();
@@ -104,5 +104,6 @@ public class CardSelectPrefabScript : MonoBehaviour
     void CloseCardDetail()
     {
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
+        BoardView.transform.SetParent(canvas.transform, true);
     }
 }
