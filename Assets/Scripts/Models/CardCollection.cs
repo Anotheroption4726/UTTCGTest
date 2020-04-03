@@ -5,6 +5,7 @@ using UnityEngine;
 public static class CardCollection
 {
     private const int TOTAL_COLLECTION = 3;
+    private static Sprite cardBack = Resources.Load<Sprite>("Cards/Card_Back") as Sprite;
 
     private static Card[] cardCollection = new Card[TOTAL_COLLECTION]
     {
@@ -56,17 +57,22 @@ public static class CardCollection
         )
     };
 
-    public static Card[] GetCardCollection()
+    public static Sprite GetCardDisplayBack()
+    {
+        return cardBack;
+    }
+
+    public static Card[] GetCardTemplateCollection()
     {
         return cardCollection;
     }
 
-    public static Card GetCardbyIndex(int arg_cardIndex)
+    public static Card GetCardTemplatebyIndex(int arg_cardIndex)
     {
         return cardCollection[arg_cardIndex];
     }
 
-    public static Card GetCardbyName(string arg_cardName)
+    public static Card GetCardTemplatebyName(string arg_cardName)
     {
         foreach (Card card in cardCollection)
         {
@@ -78,5 +84,35 @@ public static class CardCollection
 
         Debug.Log("The card " + arg_cardName + " doesn't exist.");
         return null;
+    }
+
+    public static Card_Temtem CreateNewCardTemtemFromTemplate(Card_Temtem arg_card)
+    {
+        Card_Temtem loc_card;
+
+        loc_card = new Card_Temtem(
+        arg_card.GetDisplay(),
+        arg_card.GetName(),
+        arg_card.GetCredits(),
+        arg_card.GetCardSet(),
+        arg_card.GetCardRarity(),
+        arg_card.GetPansuns(),
+        arg_card.GetElementType_1(),
+        arg_card.GetElementType_2(),
+        arg_card.GetHp(),
+        arg_card.GetAtk(),
+        arg_card.GetSpd(),
+        arg_card.GetSta(),
+        arg_card.GetTrait(),
+        arg_card.GetTraitText(),
+        arg_card.GetWeakness_1(),
+        arg_card.GetWeakness_2(),
+        arg_card.GetWeakness_3(),
+        arg_card.GetResistance_1(),
+        arg_card.GetResistance_2(),
+        arg_card.GetResistance_3()
+        );
+
+        return loc_card;
     }
 }

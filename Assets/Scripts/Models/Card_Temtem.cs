@@ -6,8 +6,8 @@ public class Card_Temtem : Card
 {
     private int pansuns;
 
-    private elementTypesEnum type_1;
-    private elementTypesEnum type_2;
+    private elementTypesEnum elementType_1;
+    private elementTypesEnum elementType_2;
 
     private int hp;
     private int atk;
@@ -55,8 +55,8 @@ public class Card_Temtem : Card
         SetCardSet(arg_cardSet);
         SetCardRarity(arg_cardRarity);
         pansuns = arg_pansuns;
-        type_1 = arg_type_1;
-        type_2 = arg_type_2;
+        elementType_1 = arg_type_1;
+        elementType_2 = arg_type_2;
         hp = arg_hp;
         atk = arg_atk;
         spd = arg_spd;
@@ -76,14 +76,14 @@ public class Card_Temtem : Card
         return pansuns;
     }
 
-    public elementTypesEnum GetType_1()
+    public elementTypesEnum GetElementType_1()
     {
-        return type_1;
+        return elementType_1;
     }
 
-    public elementTypesEnum GetType_2()
+    public elementTypesEnum GetElementType_2()
     {
-        return type_2;
+        return elementType_2;
     }
 
     public int GetHp()

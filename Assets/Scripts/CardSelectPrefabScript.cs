@@ -36,7 +36,6 @@ public class CardSelectPrefabScript : MonoBehaviour
     {
         cardDisplay = GetComponent<Image>();
         selectCardButton = GetComponent<Button>();
-        selectCardButton.onClick.AddListener(SelectCardForDetails);
 
         canvas = GameObject.Find("Canvas");
         outOfCanvasGameObject = GameObject.Find("OutOfCanvas");
@@ -47,11 +46,21 @@ public class CardSelectPrefabScript : MonoBehaviour
     public void SetCard(Card arg_card)
     {
         card = arg_card;
-        cardDisplay.sprite = card.GetDisplay();
 
-        if (card.GetCardType() == cardTypesEnum.Temtem)
+        if (card.getUncoveredStatus())
         {
-            cardTemtem = (Card_Temtem)card;
+            cardDisplay.sprite = card.GetDisplay();
+            selectCardButton.onClick.AddListener(SelectCardForDetails);
+
+            if (card.GetCardType() == cardTypesEnum.Temtem)
+            {
+                cardTemtem = (Card_Temtem)card;
+            }
+        }
+
+        if (!card.getUncoveredStatus())
+        {
+            cardDisplay.sprite = CardCollection.GetCardDisplayBack();
         }
     }
 
@@ -89,8 +98,8 @@ public class CardSelectPrefabScript : MonoBehaviour
             cardTemtemDetailTraitDisplay = GameObject.Find("CardTraitDisplay").GetComponent<Text>();
 
             cardTemtemDetailPansunsDisplay.text = "<b>Pansuns</b>: " + cardTemtem.GetPansuns();
-            cardTemtemDetailType_1Display.text = "<b>Type 1:</b> " + cardTemtem.GetType_1();
-            cardTemtemDetailType_2Display.text = "<b>Type 2:</b> " + cardTemtem.GetType_2();
+            cardTemtemDetailType_1Display.text = "<b>Type 1:</b> " + cardTemtem.GetElementType_1();
+            cardTemtemDetailType_2Display.text = "<b>Type 2:</b> " + cardTemtem.GetElementType_2();
             cardTemtemDetailHPDisplay.text = "<b>HP:</b> " + cardTemtem.GetHp();
             cardTemtemDetailWeaknessesDisplay.text = "<b>Weaknesses:</b> " + cardTemtem.GetWeakness_1() + ", " + cardTemtem.GetWeakness_2() + ", " + cardTemtem.GetWeakness_3();
             cardTemtemDetailResistancesDisplay.text = "<b>Weaknesses:</b> " + cardTemtem.GetResistance_1() + ", " + cardTemtem.GetResistance_2() + ", " + cardTemtem.GetResistance_3();
