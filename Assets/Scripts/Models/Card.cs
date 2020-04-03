@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Card
 {
+    private bool uncovered = false;
     private cardTypesEnum cardType;
     private Sprite display;
     private string name;
@@ -18,6 +19,16 @@ public abstract class Card
         name = arg_name;
     }
     */
+
+    public bool getUncoveredStatus()
+    {
+        return uncovered;
+    }
+
+    public void setUncoveredStatus(bool arg_uncoveredStatus)
+    {
+        uncovered = arg_uncoveredStatus;
+    }
 
     public cardTypesEnum GetCardType()
     {

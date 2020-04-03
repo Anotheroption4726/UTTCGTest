@@ -42,7 +42,7 @@ public class GameScript : MonoBehaviour
     {
         DeckInit();
         ShuffleCardList(deckTamer_1);
-        AddCardsByNameToList(handTamer_1, "Nessla", 1);
+        AddCardsByNameToList(handTamer_1, "Nessla", 1, true);
         DisplayCardList(handTamer_1);
     }
 
@@ -58,16 +58,19 @@ public class GameScript : MonoBehaviour
 
     public void DeckInit ()
     {
-        AddCardsByNameToList(deckTamer_1, "Nessla", 20);
-        AddCardsByNameToList(deckTamer_1, "Barnshe", 20);
-        AddCardsByNameToList(deckTamer_1, "Gyalis", 20);
+        AddCardsByNameToList(deckTamer_1, "Nessla", 20, false);
+        AddCardsByNameToList(deckTamer_1, "Barnshe", 20, false);
+        AddCardsByNameToList(deckTamer_1, "Gyalis", 20, false);
     }
 
-    public void AddCardsByNameToList(List<Card> arg_cardList, string arg_card, int arg_quantity)
+    public void AddCardsByNameToList(List<Card> arg_cardList, string arg_card, int arg_quantity, bool arg_uncovered)
     {
+        Card loc_addedCard = CardCollection.GetCardbyName(arg_card);
+        loc_addedCard.setUncoveredStatus(arg_uncovered);
+
        for (int i = 0; i < arg_quantity; i++)
        {
-            arg_cardList.Add(CardCollection.GetCardbyName(arg_card));
+            arg_cardList.Add(loc_addedCard);
         }
     }
 
