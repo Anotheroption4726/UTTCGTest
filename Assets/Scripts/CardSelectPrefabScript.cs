@@ -15,7 +15,10 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     private Image cardDisplay;
     private Button selectCardButton;
+
+
     private Button cardDetailCloseButton;
+    private Button cardDetailDiscardButton;
 
     private Image cardDetailDisplay;
     private Text cardDetailNameDisplay;
@@ -78,11 +81,13 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDetailNameDisplay = GameObject.Find("CardNameDisplay").GetComponent<Text>();
         cardDetailCreditsDisplay = GameObject.Find("CardCredits").GetComponent<Text>();
         cardDetailCloseButton = GameObject.Find("CardDisplayCloseButton").GetComponent<Button>();
+        cardDetailDiscardButton = GameObject.Find("CardDisplayDiscardButton").GetComponent<Button>();
 
         cardDetailDisplay.sprite = card.GetDisplay() as Sprite;
         cardDetailNameDisplay.text = "<b>Temtem:</b> " + card.GetName();
         cardDetailCreditsDisplay.text = "<b>Credits:</b> " + card.GetCredits();
         cardDetailCloseButton.onClick.AddListener(CloseCardDetail);
+        cardDetailDiscardButton.onClick.AddListener(DiscardCard);
 
         if (card.GetCardType() == cardTypesEnum.Temtem)
         {
@@ -114,5 +119,10 @@ public class CardSelectPrefabScript : MonoBehaviour
     {
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
         BoardView.transform.SetParent(canvas.transform, true);
+    }
+
+    void DiscardCard()
+    {
+
     }
 }
