@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class Card
 {
+    private int inDeckId;
     private bool uncovered = false;
     private cardTypesEnum cardType;
     private Sprite display;
@@ -20,12 +21,22 @@ public abstract class Card
     }
     */
 
-    public bool getUncoveredStatus()
+    public int GetInDeckId()
+    {
+        return inDeckId;
+    }
+
+    public void SetInDeckId(int arg_inDeckId)
+    {
+        inDeckId = arg_inDeckId;
+    }
+
+    public bool GetUncoveredStatus()
     {
         return uncovered;
     }
 
-    public void setUncoveredStatus(bool arg_uncoveredStatus)
+    public void SetUncoveredStatus(bool arg_uncoveredStatus)
     {
         uncovered = arg_uncoveredStatus;
     }

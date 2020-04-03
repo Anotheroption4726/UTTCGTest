@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class CardSelectPrefabScript : MonoBehaviour
 {
+    private GameObject game;
     private GameObject canvas;
     private GameObject outOfCanvasGameObject;
     private GameObject BoardView;
@@ -40,6 +41,7 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDisplay = GetComponent<Image>();
         selectCardButton = GetComponent<Button>();
 
+        game = GameObject.Find("Game");
         canvas = GameObject.Find("Canvas");
         outOfCanvasGameObject = GameObject.Find("OutOfCanvas");
         BoardView = GameObject.Find("BoardView");
@@ -50,7 +52,7 @@ public class CardSelectPrefabScript : MonoBehaviour
     {
         card = arg_card;
 
-        if (card.getUncoveredStatus())
+        if (card.GetUncoveredStatus())
         {
             cardDisplay.sprite = card.GetDisplay();
             selectCardButton.onClick.AddListener(SelectCardForDetails);
@@ -61,7 +63,7 @@ public class CardSelectPrefabScript : MonoBehaviour
             }
         }
 
-        if (!card.getUncoveredStatus())
+        if (!card.GetUncoveredStatus())
         {
             cardDisplay.sprite = CardCollection.GetCardDisplayBack();
         }
@@ -74,6 +76,8 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void SelectCardForDetails()
     {
+        Debug.Log(card.GetInDeckId());
+
         cardDetailView.transform.SetParent(canvas.transform, true);
         BoardView.transform.SetParent(outOfCanvasGameObject.transform, true);
 
@@ -87,7 +91,7 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDetailNameDisplay.text = "<b>Temtem:</b> " + card.GetName();
         cardDetailCreditsDisplay.text = "<b>Credits:</b> " + card.GetCredits();
         cardDetailCloseButton.onClick.AddListener(CloseCardDetail);
-        cardDetailDiscardButton.onClick.AddListener(DiscardCard);
+        cardDetailDiscardButton.onClick.AddListener(DiscardCardFromHand);
 
         if (card.GetCardType() == cardTypesEnum.Temtem)
         {
@@ -121,8 +125,20 @@ public class CardSelectPrefabScript : MonoBehaviour
         BoardView.transform.SetParent(canvas.transform, true);
     }
 
-    void DiscardCard()
+    void DiscardCardFromHand()
     {
+        GameScript loc_gameScript = game.GetComponent<GameScript>();
 
+        loc_gameScript.MoveCardFromListToOtherList(loc_gameScript.GetHandTamer_1(), card.GetInDeckId(), loc_gameScript.GetTrashPileTamer_1());
+        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
+        BoardView.transform.SetParent(canvas.transform, true);
+        loc_gameScript.DisplayCardList(loc_gameScript.GetHandTamer_1());
+
+        /*
+        game.GetComponent<GameScript>().MoveCardFromListToOtherList(game.GetComponent<GameScript>().GetHandTamer_1(), card.GetInDeckId(), game.GetComponent<GameScript>().GetTrashPileTamer_1());
+        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
+        BoardView.transform.SetParent(canvas.transform, true);
+        game.GetComponent<GameScript>().DisplayCardList(game.GetComponent<GameScript>().GetHandTamer_1());
+        */
     }
 }

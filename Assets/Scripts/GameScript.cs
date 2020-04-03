@@ -12,9 +12,25 @@ public class GameScript : MonoBehaviour
     [SerializeField] private GameObject cardListDisplay;
     [SerializeField] private GameObject CardSelectPrefab;
 
-    public List<Card> deckTamer_1;
-    private List<Card> trashPileTamer_1;
-    public List<Card> handTamer_1;
+    private int cardInDeckIdCount = 0;
+    private List<Card> deckTamer_1 = new List<Card>();
+    private List<Card> trashPileTamer_1 = new List<Card>();
+    private List<Card> handTamer_1 = new List<Card>();
+
+    public List<Card> GetDeckTamer_1()
+    {
+        return deckTamer_1;
+    }
+
+    public List<Card> GetTrashPileTamer_1()
+    {
+        return trashPileTamer_1;
+    }
+
+    public List<Card> GetHandTamer_1()
+    {
+        return handTamer_1;
+    }
 
     private void Awake()
     {
@@ -32,10 +48,6 @@ public class GameScript : MonoBehaviour
         {
             DisplayCardList(handTamer_1);
         });
-
-        deckTamer_1 = new List<Card>();
-        trashPileTamer_1 = new List<Card>();
-        handTamer_1 = new List<Card>();
     }
 
     private void Start()
@@ -57,12 +69,13 @@ public class GameScript : MonoBehaviour
 
     public void DeckInit()
     {
-        AddCardsByNameFromCollectionToList(deckTamer_1, "Nessla", 20, false);
-        AddCardsByNameFromCollectionToList(deckTamer_1, "Barnshe", 20, false);
-        AddCardsByNameFromCollectionToList(deckTamer_1, "Gyalis", 20, false);
+        AddCardsToDeckByNameFromCollection(deckTamer_1, "Nessla", 20, false);
+        AddCardsToDeckByNameFromCollection(deckTamer_1, "Barnshe", 20, false);
+        AddCardsToDeckByNameFromCollection(deckTamer_1, "Gyalis", 20, false);
+        cardInDeckIdCount = 0;
     }
 
-    public void AddCardsByNameFromCollectionToList(List<Card> arg_cardList, string arg_cardName, int arg_quantity, bool arg_uncovered)
+    public void AddCardsToDeckByNameFromCollection(List<Card> arg_cardList, string arg_cardName, int arg_quantity, bool arg_uncovered)
     {
         Card loc_selectedCard = CardCollection.GetCardTemplatebyName(arg_cardName);
         Card_Temtem loc_selectedCardTemtem;
@@ -74,7 +87,9 @@ public class GameScript : MonoBehaviour
             for (int i = 0; i < arg_quantity; i++)
             {
                 Card loc_addedCard = CardCollection.CreateNewCardTemtemFromTemplate(loc_selectedCardTemtem);
-                loc_addedCard.setUncoveredStatus(arg_uncovered);
+                cardInDeckIdCount ++;
+                loc_addedCard.SetInDeckId(cardInDeckIdCount);
+                loc_addedCard.SetUncoveredStatus(arg_uncovered);
                 arg_cardList.Add(loc_addedCard);
             }
         }
@@ -111,7 +126,7 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public void DrawCardFromListAddToOtherList(List<Card> arg_cardListDraw, List<Card> arg_cardListReceive, int arg_quantity, bool arg_uncovered)
+    public void DrawCardFromListAddToOtherList(List<Card> arg_cardListDraw, List<Card> arg_cardListAdd, int arg_quantity, bool arg_uncovered)
     {
         Card loc_cardDraw;
 
@@ -120,9 +135,25 @@ public class GameScript : MonoBehaviour
             if (arg_cardListDraw.Count > 0)
             {
                 loc_cardDraw = arg_cardListDraw[0];
-                loc_cardDraw.setUncoveredStatus(arg_uncovered);
-                arg_cardListReceive.Add(loc_cardDraw);
+                loc_cardDraw.SetUncoveredStatus(arg_uncovered);
+                arg_cardListAdd.Add(loc_cardDraw);
                 arg_cardListDraw.RemoveAt(0);
+            }
+        }
+    }
+
+    public void MoveCardFromListToOtherList(List<Card> arg_cardListRemove, int arg_inDeckId, List<Card> arg_cardListAdd)
+    {
+        Card loc_selectedCard;
+
+        foreach(Card card in arg_cardListRemove)
+        {
+            if (card.GetInDeckId() == arg_inDeckId)
+            {
+                loc_selectedCard = card;
+                arg_cardListAdd.Add(loc_selectedCard);
+                arg_cardListRemove.Remove(loc_selectedCard);
+                break;
             }
         }
     }
