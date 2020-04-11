@@ -78,7 +78,7 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void SelectCardForDetails()
     {
-        Debug.Log(card.GetInDeckId());
+        Debug.Log("Card Selected: " + card.GetInDeckId());
 
         cardDetailView.transform.SetParent(canvas.transform, true);
         BoardView.transform.SetParent(outOfCanvasGameObject.transform, true);
@@ -141,6 +141,7 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void TEST_DiscardCardFromHand()
     {
+        Debug.Log("Card played: " + card.GetInDeckId());
         gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetHandTamer_1(), card.GetInDeckId(), gameScript.GetTrashPileTamer_1());
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
         BoardView.transform.SetParent(canvas.transform, true);
