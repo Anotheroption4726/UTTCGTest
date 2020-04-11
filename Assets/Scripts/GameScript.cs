@@ -21,7 +21,10 @@ public class GameScript : MonoBehaviour
 
     private actionStateEnum curentActionState;
     private browsingLocationEnum curentBrowsingLocation;
+
     private List<Card> cardSelection = new List<Card>();
+    private int cardSelectionTotalCards;
+    private int cardSelectionCurrentCards;
 
     public List<Card> GetDeckTamer_1()
     {
