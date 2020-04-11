@@ -17,6 +17,8 @@ public class GameScript : MonoBehaviour
     private List<Card> trashPileTamer_1 = new List<Card>();
     private List<Card> handTamer_1 = new List<Card>();
 
+    private List<Card> cardSelection = new List<Card>();
+
     public List<Card> GetDeckTamer_1()
     {
         return deckTamer_1;
@@ -30,6 +32,16 @@ public class GameScript : MonoBehaviour
     public List<Card> GetHandTamer_1()
     {
         return handTamer_1;
+    }
+
+    public List<Card> GetcardSelection()
+    {
+        return cardSelection;
+    }
+
+    public void AddcardSelection(Card arg_card)
+    {
+        cardSelection.Add(arg_card);
     }
 
     private void Awake()

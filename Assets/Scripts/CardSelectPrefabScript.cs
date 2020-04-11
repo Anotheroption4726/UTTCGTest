@@ -133,12 +133,5 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
         BoardView.transform.SetParent(canvas.transform, true);
         loc_gameScript.DisplayCardList(loc_gameScript.GetHandTamer_1());
-
-        /*
-        game.GetComponent<GameScript>().MoveCardFromListToOtherList(game.GetComponent<GameScript>().GetHandTamer_1(), card.GetInDeckId(), game.GetComponent<GameScript>().GetTrashPileTamer_1());
-        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
-        BoardView.transform.SetParent(canvas.transform, true);
-        game.GetComponent<GameScript>().DisplayCardList(game.GetComponent<GameScript>().GetHandTamer_1());
-        */
     }
 }
