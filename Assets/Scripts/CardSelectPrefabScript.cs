@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CardSelectPrefabScript : MonoBehaviour
 {
     private GameObject game;
+    private GameScript gameScript;
     private GameObject canvas;
     private GameObject outOfCanvasGameObject;
     private GameObject BoardView;
@@ -19,7 +20,7 @@ public class CardSelectPrefabScript : MonoBehaviour
 
 
     private Button cardDetailCloseButton;
-    private Button cardDetailDiscardButton;
+    private Button cardDetailActionButton_1;
 
     private Image cardDetailDisplay;
     private Text cardDetailNameDisplay;
@@ -42,6 +43,7 @@ public class CardSelectPrefabScript : MonoBehaviour
         selectCardButton = GetComponent<Button>();
 
         game = GameObject.Find("Game");
+        gameScript = game.GetComponent<GameScript>();
         canvas = GameObject.Find("Canvas");
         outOfCanvasGameObject = GameObject.Find("OutOfCanvas");
         BoardView = GameObject.Find("BoardView");
@@ -85,13 +87,25 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDetailNameDisplay = GameObject.Find("CardNameDisplay").GetComponent<Text>();
         cardDetailCreditsDisplay = GameObject.Find("CardCredits").GetComponent<Text>();
         cardDetailCloseButton = GameObject.Find("CardDisplayCloseButton").GetComponent<Button>();
-        cardDetailDiscardButton = GameObject.Find("CardDisplayActionButton_1").GetComponent<Button>();
+        cardDetailActionButton_1 = GameObject.Find("CardDisplayActionButton_1").GetComponent<Button>();
 
         cardDetailDisplay.sprite = card.GetDisplay() as Sprite;
         cardDetailNameDisplay.text = "<b>Temtem:</b> " + card.GetName();
         cardDetailCreditsDisplay.text = "<b>Credits:</b> " + card.GetCredits();
-        cardDetailCloseButton.onClick.AddListener(CloseCardDetail);
-        cardDetailDiscardButton.onClick.AddListener(DiscardCardFromHand);
+
+        cardDetailCloseButton.onClick.AddListener(CloseCardDetailListener);
+
+        if (gameScript.GetcurentBrowsingLocation() == browsingLocationEnum.Hand)
+        {
+            cardDetailActionButton_1.GetComponentInChildren<Text>().text = "Play";
+            cardDetailActionButton_1.onClick.AddListener(TEST_DiscardCardFromHand);
+        }
+
+        if (gameScript.GetcurentBrowsingLocation() == browsingLocationEnum.TrashPile)
+        {
+            //cardDetailActionButton_1.gameObject.SetActive(true);
+            //cardDetailActionButton_1.gameObject.SetActive(false);
+        }
 
         if (card.GetCardType() == cardTypesEnum.Temtem)
         {
@@ -119,19 +133,17 @@ public class CardSelectPrefabScript : MonoBehaviour
         }
     }
 
-    void CloseCardDetail()
+    void CloseCardDetailListener()
     {
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
         BoardView.transform.SetParent(canvas.transform, true);
     }
 
-    void DiscardCardFromHand()
+    void TEST_DiscardCardFromHand()
     {
-        GameScript loc_gameScript = game.GetComponent<GameScript>();
-
-        loc_gameScript.MoveSpecificCardFromListToOtherList(loc_gameScript.GetHandTamer_1(), card.GetInDeckId(), loc_gameScript.GetTrashPileTamer_1());
+        gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetHandTamer_1(), card.GetInDeckId(), gameScript.GetTrashPileTamer_1());
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
         BoardView.transform.SetParent(canvas.transform, true);
-        loc_gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+        gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
     }
 }
