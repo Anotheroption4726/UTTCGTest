@@ -96,13 +96,12 @@ public class CardSelectPrefabScript : MonoBehaviour
             cardDetailViewActionButton_1.transform.SetParent(canvas.transform, true);
             cardDetailActionButton_1 = cardDetailViewActionButton_1.GetComponentInChildren<Button>();
             cardDetailActionButton_1.GetComponentInChildren<Text>().text = "Play";
-            cardDetailActionButton_1.onClick.AddListener(TEST_DiscardCardFromHand);
+            cardDetailActionButton_1.onClick.AddListener(PlayTemtemCardListener);
         }
 
         if (gameScript.GetcurentBrowsingLocation() == browsingLocationEnum.TrashPile)
         {
-            //cardDetailActionButton_1.gameObject.SetActive(true);
-            //cardDetailActionButton_1.gameObject.SetActive(false);
+            
         }
 
 
@@ -141,12 +140,9 @@ public class CardSelectPrefabScript : MonoBehaviour
         ClearCardDisplay();
     }
 
-    void TEST_DiscardCardFromHand()
+    void PlayTemtemCardListener()
     {
-        Debug.Log("Card played: " + card.GetInDeckId());
-        ClearCardDisplay();
-        gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetHandTamer_1(), card.GetInDeckId(), gameScript.GetTrashPileTamer_1());
-        gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+        
     }
 
     void ClearCardDisplay()
@@ -156,5 +152,13 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
         cardDetailViewActionButton_1.transform.SetParent(outOfCanvasGameObject.transform, true);
         BoardView.transform.SetParent(canvas.transform, true);
+    }
+
+    void TEST_DiscardCardFromHand()
+    {
+        Debug.Log("Card played: " + card.GetInDeckId());
+        ClearCardDisplay();
+        gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetHandTamer_1(), card.GetInDeckId(), gameScript.GetTrashPileTamer_1());
+        gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
     }
 }
