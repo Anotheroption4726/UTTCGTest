@@ -17,6 +17,8 @@ public class GameScript : MonoBehaviour
     private List<Card> trashPileTamer_1 = new List<Card>();
     private List<Card> handTamer_1 = new List<Card>();
 
+    private actionStateEnum curentActionState;
+    private browsingLocationEnum curentBrowsingLocation;
     private List<Card> cardSelection = new List<Card>();
 
     public List<Card> GetDeckTamer_1()
@@ -32,6 +34,41 @@ public class GameScript : MonoBehaviour
     public List<Card> GetHandTamer_1()
     {
         return handTamer_1;
+    }
+
+    public actionStateEnum GetcurentActionState()
+    {
+        return curentActionState;
+    }
+
+    public void SetcurentActionState(actionStateEnum arg_actionState)
+    {
+        curentActionState = arg_actionState;
+    }
+
+    public browsingLocationEnum GetcurentBrowsingLocation()
+    {
+        return curentBrowsingLocation;
+    }
+
+    public void SetcurentBrowsingLocation(browsingLocationEnum arg_rowsingLocation)
+    {
+        if (arg_rowsingLocation == browsingLocationEnum.Hand)
+        {
+            DisplayCardList(handTamer_1);
+        }
+
+        if (arg_rowsingLocation == browsingLocationEnum.Backpack)
+        {
+            DisplayCardList(deckTamer_1);
+        }
+
+        if (arg_rowsingLocation == browsingLocationEnum.TrashPile)
+        {
+            DisplayCardList(trashPileTamer_1);
+        }
+
+        curentBrowsingLocation = arg_rowsingLocation;
     }
 
     public List<Card> GetcardSelection()
@@ -66,15 +103,16 @@ public class GameScript : MonoBehaviour
     {
         DeckInit();
         ShuffleCardList(deckTamer_1);
-        DrawCardFromListAddToOtherList(deckTamer_1, handTamer_1, 5, true);
-        DisplayCardList(handTamer_1);
+        DrawCardsFromListAddToOtherList(deckTamer_1, handTamer_1, 5, true);
+        curentActionState = actionStateEnum.Play;
+        SetcurentBrowsingLocation(browsingLocationEnum.Hand);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown("space"))
         {
-            DrawCardFromListAddToOtherList(deckTamer_1, handTamer_1, 1, true);
+            DrawCardsFromListAddToOtherList(deckTamer_1, handTamer_1, 1, true);
             DisplayCardList(handTamer_1);
         }
     }
@@ -138,7 +176,7 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public void DrawCardFromListAddToOtherList(List<Card> arg_cardListDraw, List<Card> arg_cardListAdd, int arg_quantity, bool arg_uncovered)
+    public void DrawCardsFromListAddToOtherList(List<Card> arg_cardListDraw, List<Card> arg_cardListAdd, int arg_quantity, bool arg_uncovered)
     {
         Card loc_cardDraw;
 
@@ -154,7 +192,7 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public void MoveCardFromListToOtherList(List<Card> arg_cardListRemove, int arg_inDeckId, List<Card> arg_cardListAdd)
+    public void MoveSpecificCardFromListToOtherList(List<Card> arg_cardListRemove, int arg_inDeckId, List<Card> arg_cardListAdd)
     {
         Card loc_selectedCard;
 
