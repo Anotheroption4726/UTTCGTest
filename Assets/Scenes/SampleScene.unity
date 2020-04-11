@@ -1315,7 +1315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac5504dd8bc1014fa6e2a5bf12e2ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deckPlayerButton: {fileID: 981721303}
+  gamePrompt: {fileID: 939382856}
+  backpackPlayerButton: {fileID: 981721303}
   trashPilePlayerButton: {fileID: 1302001351}
   handPlayerButton: {fileID: 594306198}
   cardListDisplay: {fileID: 519308323}
@@ -1804,7 +1805,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1887487156}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -2940,7 +2941,7 @@ RectTransform:
   - {fileID: 1790682531}
   - {fileID: 1105923835}
   m_Father: {fileID: 1887487156}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -3305,8 +3306,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 517308002}
-  - {fileID: 1695815507}
   - {fileID: 939382855}
+  - {fileID: 1695815507}
   m_Father: {fileID: 327918395}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

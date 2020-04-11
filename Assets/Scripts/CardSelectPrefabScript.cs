@@ -132,6 +132,6 @@ public class CardSelectPrefabScript : MonoBehaviour
         loc_gameScript.MoveSpecificCardFromListToOtherList(loc_gameScript.GetHandTamer_1(), card.GetInDeckId(), loc_gameScript.GetTrashPileTamer_1());
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
         BoardView.transform.SetParent(canvas.transform, true);
-        loc_gameScript.DisplayCardList(loc_gameScript.GetHandTamer_1());
+        loc_gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
     }
 }

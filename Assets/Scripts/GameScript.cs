@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour
 {
-    [SerializeField] private Button deckPlayerButton;
+    [SerializeField] private Text gamePrompt;
+
+    [SerializeField] private Button backpackPlayerButton;
     [SerializeField] private Button trashPilePlayerButton;
     [SerializeField] private Button handPlayerButton;
 
@@ -13,7 +15,7 @@ public class GameScript : MonoBehaviour
     [SerializeField] private GameObject CardSelectPrefab;
 
     private int cardInDeckIdCount = 0;
-    private List<Card> deckTamer_1 = new List<Card>();
+    private List<Card> backpackTamer_1 = new List<Card>();
     private List<Card> trashPileTamer_1 = new List<Card>();
     private List<Card> handTamer_1 = new List<Card>();
 
@@ -23,7 +25,7 @@ public class GameScript : MonoBehaviour
 
     public List<Card> GetDeckTamer_1()
     {
-        return deckTamer_1;
+        return backpackTamer_1;
     }
 
     public List<Card> GetTrashPileTamer_1()
@@ -55,16 +57,19 @@ public class GameScript : MonoBehaviour
     {
         if (arg_rowsingLocation == browsingLocationEnum.Hand)
         {
+            gamePrompt.text = "Hand : " + handTamer_1.Count + " Card(s)";
             DisplayCardList(handTamer_1);
         }
 
         if (arg_rowsingLocation == browsingLocationEnum.Backpack)
         {
-            DisplayCardList(deckTamer_1);
+            gamePrompt.text = "Backpack : " + backpackTamer_1.Count + " Card(s)";
+            DisplayCardList(backpackTamer_1);
         }
 
         if (arg_rowsingLocation == browsingLocationEnum.TrashPile)
         {
+            gamePrompt.text = "Trash Pile : " + trashPileTamer_1.Count + " Card(s)";
             DisplayCardList(trashPileTamer_1);
         }
 
@@ -83,27 +88,27 @@ public class GameScript : MonoBehaviour
 
     private void Awake()
     {
-        deckPlayerButton.onClick.AddListener(() =>
+        backpackPlayerButton.onClick.AddListener(() =>
         {
-            DisplayCardList(deckTamer_1);
+            SetcurentBrowsingLocation(browsingLocationEnum.Backpack);
         });
 
         trashPilePlayerButton.onClick.AddListener(() =>
         {
-            DisplayCardList(trashPileTamer_1);
+            SetcurentBrowsingLocation(browsingLocationEnum.TrashPile);
         });
 
         handPlayerButton.onClick.AddListener(() =>
         {
-            DisplayCardList(handTamer_1);
+            SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         });
     }
 
     private void Start()
     {
         DeckInit();
-        ShuffleCardList(deckTamer_1);
-        DrawCardsFromListAddToOtherList(deckTamer_1, handTamer_1, 5, true);
+        ShuffleCardList(backpackTamer_1);
+        DrawCardsFromListAddToOtherList(backpackTamer_1, handTamer_1, 5, true);
         curentActionState = actionStateEnum.Play;
         SetcurentBrowsingLocation(browsingLocationEnum.Hand);
     }
@@ -112,16 +117,16 @@ public class GameScript : MonoBehaviour
     {
         if (Input.GetKeyDown("space"))
         {
-            DrawCardsFromListAddToOtherList(deckTamer_1, handTamer_1, 1, true);
-            DisplayCardList(handTamer_1);
+            DrawCardsFromListAddToOtherList(backpackTamer_1, handTamer_1, 1, true);
+            SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         }
     }
 
     public void DeckInit()
     {
-        AddCardsToDeckByNameFromCollection(deckTamer_1, "Nessla", 20, false);
-        AddCardsToDeckByNameFromCollection(deckTamer_1, "Barnshe", 20, false);
-        AddCardsToDeckByNameFromCollection(deckTamer_1, "Gyalis", 20, false);
+        AddCardsToDeckByNameFromCollection(backpackTamer_1, "Nessla", 20, false);
+        AddCardsToDeckByNameFromCollection(backpackTamer_1, "Barnshe", 20, false);
+        AddCardsToDeckByNameFromCollection(backpackTamer_1, "Gyalis", 20, false);
         cardInDeckIdCount = 0;
     }
 
