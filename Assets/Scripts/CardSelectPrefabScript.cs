@@ -11,6 +11,7 @@ public class CardSelectPrefabScript : MonoBehaviour
     private GameObject outOfCanvasGameObject;
     private GameObject BoardView;
     private GameObject cardDetailView;
+    private GameObject cardDetailViewActionButton_1;
 
     private Card card;
     private Card_Temtem cardTemtem;
@@ -87,16 +88,13 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDetailNameDisplay = GameObject.Find("CardNameDisplay").GetComponent<Text>();
         cardDetailCreditsDisplay = GameObject.Find("CardCredits").GetComponent<Text>();
         cardDetailCloseButton = GameObject.Find("CardDisplayCloseButton").GetComponent<Button>();
-        cardDetailActionButton_1 = GameObject.Find("CardDisplayActionButton_1").GetComponent<Button>();
-
-        cardDetailDisplay.sprite = card.GetDisplay() as Sprite;
-        cardDetailNameDisplay.text = "<b>Temtem:</b> " + card.GetName();
-        cardDetailCreditsDisplay.text = "<b>Credits:</b> " + card.GetCredits();
-
         cardDetailCloseButton.onClick.AddListener(CloseCardDetailListener);
 
         if (gameScript.GetcurentBrowsingLocation() == browsingLocationEnum.Hand)
         {
+            cardDetailViewActionButton_1 = GameObject.Find("CardDetailActionButton_1");
+            cardDetailViewActionButton_1.transform.SetParent(canvas.transform, true);
+            cardDetailActionButton_1 = cardDetailViewActionButton_1.GetComponentInChildren<Button>();
             cardDetailActionButton_1.GetComponentInChildren<Text>().text = "Play";
             cardDetailActionButton_1.onClick.AddListener(TEST_DiscardCardFromHand);
         }
@@ -106,6 +104,11 @@ public class CardSelectPrefabScript : MonoBehaviour
             //cardDetailActionButton_1.gameObject.SetActive(true);
             //cardDetailActionButton_1.gameObject.SetActive(false);
         }
+
+
+        cardDetailDisplay.sprite = card.GetDisplay() as Sprite;
+        cardDetailNameDisplay.text = "<b>Temtem:</b> " + card.GetName();
+        cardDetailCreditsDisplay.text = "<b>Credits:</b> " + card.GetCredits();
 
         if (card.GetCardType() == cardTypesEnum.Temtem)
         {
@@ -135,16 +138,23 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void CloseCardDetailListener()
     {
-        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
-        BoardView.transform.SetParent(canvas.transform, true);
+        ClearCardDisplay();
     }
 
     void TEST_DiscardCardFromHand()
     {
         Debug.Log("Card played: " + card.GetInDeckId());
+        ClearCardDisplay();
         gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetHandTamer_1(), card.GetInDeckId(), gameScript.GetTrashPileTamer_1());
-        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
-        BoardView.transform.SetParent(canvas.transform, true);
         gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+    }
+
+    void ClearCardDisplay()
+    {
+        cardDetailViewActionButton_1 = GameObject.Find("CardDetailActionButton_1");
+
+        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
+        cardDetailViewActionButton_1.transform.SetParent(outOfCanvasGameObject.transform, true);
+        BoardView.transform.SetParent(canvas.transform, true);
     }
 }
