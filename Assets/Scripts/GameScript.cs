@@ -114,6 +114,9 @@ public class GameScript : MonoBehaviour
         DrawCardsFromListAddToOtherList(backpackTamer_1, handTamer_1, 5, true);
         curentActionState = actionStateEnum.Play;
         SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+
+        MoveSpecificCardFromListToOtherList(backpackTamer_1, backpackTamer_1[0].GetInDeckId(), trashPileTamer_1);
+        trashPileTamer_1[0].SetUncoveredStatus(true);
     }
 
     private void Update()
