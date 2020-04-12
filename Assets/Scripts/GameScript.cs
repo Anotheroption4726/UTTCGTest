@@ -10,6 +10,7 @@ public class GameScript : MonoBehaviour
     [SerializeField] private Button backpackPlayerButton;
     [SerializeField] private Button trashPilePlayerButton;
     [SerializeField] private Button handPlayerButton;
+    [SerializeField] private Button cancelActionButton;
 
     [SerializeField] private GameObject cardListDisplay;
     [SerializeField] private GameObject CardSelectPrefab;
@@ -106,11 +107,12 @@ public class GameScript : MonoBehaviour
             SetcurentBrowsingLocation(browsingLocationEnum.TrashPile);
         });
 
-
         handPlayerButton.onClick.AddListener(() =>
         {
             SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         });
+
+        cancelActionButton.onClick.AddListener(CancelActionSelectionListener);
     }
 
     private void Start()
@@ -238,5 +240,19 @@ public class GameScript : MonoBehaviour
                 break;
             }
         }
+    }
+
+    void CancelActionSelectionListener()
+    {
+        Debug.Log("Action cancelled");
+        /*
+        ClearCardButtonsDisplay();
+
+        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
+        BoardView.transform.SetParent(canvas.transform, true);
+
+        gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+        gameScript.SetCurentActionState(actionStateEnum.Play);
+        */
     }
 }

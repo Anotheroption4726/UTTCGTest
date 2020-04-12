@@ -567,7 +567,7 @@ RectTransform:
   m_Children:
   - {fileID: 1358569556}
   m_Father: {fileID: 807807166}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1201,6 +1201,7 @@ MonoBehaviour:
   backpackPlayerButton: {fileID: 981721303}
   trashPilePlayerButton: {fileID: 1302001351}
   handPlayerButton: {fileID: 594306198}
+  cancelActionButton: {fileID: 1598350754}
   cardListDisplay: {fileID: 519308323}
   CardSelectPrefab: {fileID: 3994924615174746453, guid: 30d7709517bfb7f4eb9f0075266c7749,
     type: 3}
@@ -1308,10 +1309,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2024806179}
   - {fileID: 1542125123}
   - {fileID: 290260471}
   - {fileID: 2017208253}
+  - {fileID: 2024806179}
   m_Father: {fileID: 327918395}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2706,7 +2707,7 @@ RectTransform:
   - {fileID: 1821414445}
   - {fileID: 138370080}
   m_Father: {fileID: 807807166}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -3384,7 +3385,7 @@ RectTransform:
   m_Children:
   - {fileID: 1031017147}
   m_Father: {fileID: 807807166}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -3501,7 +3502,7 @@ RectTransform:
   m_Children:
   - {fileID: 1598350753}
   m_Father: {fileID: 807807166}
-  m_RootOrder: 0
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}

@@ -11,9 +11,10 @@ public class CardSelectPrefabScript : MonoBehaviour
     private GameScript gameScript;
     private GameObject canvas;
     private GameObject outOfCanvasGameObject;
-    private GameObject BoardView;
+    private GameObject boardView;
     private GameObject cardDetailView;
-    private GameObject[] CardDetailViewButtonsTable = new GameObject[TOTAL_BUTTONS];
+    private GameObject[] cardDetailViewButtonsTable = new GameObject[TOTAL_BUTTONS];
+    private GameObject selectActionView;
 
     private Card card;
     private Card_Temtem cardTemtem;
@@ -36,7 +37,7 @@ public class CardSelectPrefabScript : MonoBehaviour
     private Text cardTemtemDetailSTADisplay;
     private Text cardTemtemDetailTraitDisplay;
 
-    private Button[] CardDetailButtonsTable = new Button[TOTAL_BUTTONS];
+    private Button[] cardDetailButtonsTable = new Button[TOTAL_BUTTONS];
 
     void Awake()
     {
@@ -47,8 +48,9 @@ public class CardSelectPrefabScript : MonoBehaviour
         gameScript = game.GetComponent<GameScript>();
         canvas = GameObject.Find("Canvas");
         outOfCanvasGameObject = GameObject.Find("OutOfCanvas");
-        BoardView = GameObject.Find("BoardView");
+        boardView = GameObject.Find("BoardView");
         cardDetailView = GameObject.Find("CardDetailView");
+        selectActionView = GameObject.Find("SelectActionView");
     }
 
     public void SetCard(Card arg_card)
@@ -82,7 +84,8 @@ public class CardSelectPrefabScript : MonoBehaviour
         Debug.Log("Card Info: " + card.GetInDeckId());
 
         cardDetailView.transform.SetParent(canvas.transform, true);
-        BoardView.transform.SetParent(outOfCanvasGameObject.transform, true);
+        boardView.transform.SetParent(outOfCanvasGameObject.transform, true);
+        selectActionView.transform.SetParent(outOfCanvasGameObject.transform, true);
 
         cardDetailDisplay = GameObject.Find("CardDisplay").GetComponent<Image>();
         cardDetailNameDisplay = GameObject.Find("CardNameDisplay").GetComponent<Text>();
@@ -93,19 +96,22 @@ public class CardSelectPrefabScript : MonoBehaviour
             if (gameScript.GetcurentActionState() == actionStateEnum.Play)
             {
                 SetupButtonView(0, "CardDetailViewButton_0", "Close");
-                CardDetailButtonsTable[0].onClick.AddListener(CloseCardDetailListener);
+                cardDetailButtonsTable[0].onClick.AddListener(CloseCardDetailListener);
 
                 SetupButtonView(1, "CardDetailViewButton_1", "Play");
-                CardDetailButtonsTable[1].onClick.AddListener(PlayTemtemCardListener);
+                cardDetailButtonsTable[1].onClick.AddListener(PlayTemtemCardListener);
             }
 
             if (gameScript.GetcurentActionState() == actionStateEnum.Select)
             {
-                SetupButtonView(0, "CardDetailViewButton_0", "Cancel");
-                CardDetailButtonsTable[0].onClick.AddListener(CancelActionSelectionListener);
+                //SetupButtonView(0, "CardDetailViewButton_0", "Cancel");
+                //CardDetailButtonsTable[0].onClick.AddListener(CancelActionSelectionListener);
+
+                SetupButtonView(0, "CardDetailViewButton_0", "Close");
+                cardDetailButtonsTable[0].onClick.AddListener(CloseCardDetailListener);
 
                 SetupButtonView(1, "CardDetailViewButton_1", "Select");
-                CardDetailButtonsTable[1].onClick.AddListener(SelectCardListener);
+                cardDetailButtonsTable[1].onClick.AddListener(SelectCardListener);
             }
         }
 
@@ -114,7 +120,7 @@ public class CardSelectPrefabScript : MonoBehaviour
             if (gameScript.GetcurentActionState() == actionStateEnum.Play)
             {
                 SetupButtonView(0, "CardDetailViewButton_0", "Close");
-                CardDetailButtonsTable[0].onClick.AddListener(CloseCardDetailListener);
+                cardDetailButtonsTable[0].onClick.AddListener(CloseCardDetailListener);
             }
         }
 
@@ -151,22 +157,42 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void SetupButtonView(int arg_buttonIndex, string arg_viewButtonName, string arg_buttonText)
     {
-        CardDetailViewButtonsTable[arg_buttonIndex] = GameObject.Find(arg_viewButtonName);
-        CardDetailViewButtonsTable[arg_buttonIndex].transform.SetParent(canvas.transform, true);
-        CardDetailButtonsTable[arg_buttonIndex] = CardDetailViewButtonsTable[arg_buttonIndex].GetComponent<Button>();
-        CardDetailButtonsTable[arg_buttonIndex].onClick.RemoveAllListeners();
-        CardDetailButtonsTable[arg_buttonIndex].GetComponentInChildren<Text>().text = arg_buttonText;
+        cardDetailViewButtonsTable[arg_buttonIndex] = GameObject.Find(arg_viewButtonName);
+        cardDetailViewButtonsTable[arg_buttonIndex].transform.SetParent(canvas.transform, true);
+        cardDetailButtonsTable[arg_buttonIndex] = cardDetailViewButtonsTable[arg_buttonIndex].GetComponent<Button>();
+        cardDetailButtonsTable[arg_buttonIndex].onClick.RemoveAllListeners();
+        cardDetailButtonsTable[arg_buttonIndex].GetComponentInChildren<Text>().text = arg_buttonText;
     }
 
     void CloseCardDetailListener()
     {
         ClearCardButtonsDisplay();
-        
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
-        BoardView.transform.SetParent(canvas.transform, true);
+
+        if (gameScript.GetcurentActionState() == actionStateEnum.Play)
+        {
+            boardView.transform.SetParent(canvas.transform, true);
+        }
+
+        if (gameScript.GetcurentActionState() == actionStateEnum.Select)
+        {
+            selectActionView.transform.SetParent(canvas.transform, true);
+        }
+    }
+
+    void PlayTemtemCardListener()
+    {
+        Debug.Log("Card played: " + card.GetInDeckId());
 
         gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
-        gameScript.SetCurentActionState(actionStateEnum.Play);
+        gameScript.SetCurentActionState(actionStateEnum.Select);
+
+        ClearCardButtonsDisplay();
+        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
+        selectActionView.transform.SetParent(canvas.transform, true);
+
+        gameScript.DisplayCardListSelectMode(gameScript.GetHandTamer_1(), card.GetInDeckId());
+        gameScript.GetGamePrompt().text = "Select " + cardTemtem.GetPansuns() + " cards to discard from your Hand";
     }
 
     void CancelActionSelectionListener()
@@ -174,25 +200,10 @@ public class CardSelectPrefabScript : MonoBehaviour
         ClearCardButtonsDisplay();
 
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
-        BoardView.transform.SetParent(canvas.transform, true);
+        boardView.transform.SetParent(canvas.transform, true);
 
         gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         gameScript.SetCurentActionState(actionStateEnum.Play);
-    }
-
-    void PlayTemtemCardListener()
-    {
-        Debug.Log("Card played: " + card.GetInDeckId());
-
-        ClearCardButtonsDisplay();
-
-        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
-
-        gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
-        gameScript.SetCurentActionState(actionStateEnum.Select);
-        gameScript.DisplayCardListSelectMode(gameScript.GetHandTamer_1(), card.GetInDeckId());
-
-        gameScript.GetGamePrompt().text = "Select " + cardTemtem.GetPansuns() + " cards to discard from your Hand";
     }
 
     void SelectCardListener()
@@ -202,11 +213,11 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void ClearCardButtonsDisplay()
     {
-        CardDetailViewButtonsTable[0] = GameObject.Find("CardDetailViewButton_0");
-        CardDetailViewButtonsTable[0].transform.SetParent(outOfCanvasGameObject.transform, true);
+        cardDetailViewButtonsTable[0] = GameObject.Find("CardDetailViewButton_0");
+        cardDetailViewButtonsTable[0].transform.SetParent(outOfCanvasGameObject.transform, true);
 
-        CardDetailViewButtonsTable[1] = GameObject.Find("CardDetailViewButton_1");
-        CardDetailViewButtonsTable[1].transform.SetParent(outOfCanvasGameObject.transform, true);
+        cardDetailViewButtonsTable[1] = GameObject.Find("CardDetailViewButton_1");
+        cardDetailViewButtonsTable[1].transform.SetParent(outOfCanvasGameObject.transform, true);
     }
 
     void TEST_DiscardCardFromHand()
