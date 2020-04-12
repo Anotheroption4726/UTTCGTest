@@ -66,19 +66,19 @@ public class GameScript : MonoBehaviour
         if (arg_rowsingLocation == browsingLocationEnum.Hand)
         {
             gamePrompt.text = "Hand : " + handTamer_1.Count + " Card(s)";
-            DisplayCardList(handTamer_1);
+            DisplayCardListPlayMode(handTamer_1);
         }
 
         if (arg_rowsingLocation == browsingLocationEnum.Backpack)
         {
             gamePrompt.text = "Backpack : " + backpackTamer_1.Count + " Card(s)";
-            DisplayCardList(backpackTamer_1);
+            DisplayCardListPlayMode(backpackTamer_1);
         }
 
         if (arg_rowsingLocation == browsingLocationEnum.TrashPile)
         {
             gamePrompt.text = "Trash Pile : " + trashPileTamer_1.Count + " Card(s)";
-            DisplayCardList(trashPileTamer_1);
+            DisplayCardListPlayMode(trashPileTamer_1);
         }
 
         curentBrowsingLocation = arg_rowsingLocation;
@@ -162,7 +162,7 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public void DisplayCardList(List<Card> arg_cardList)
+    public void DisplayCardListPlayMode(List<Card> arg_cardList)
     {
         ClearCardList();
 
@@ -171,6 +171,21 @@ public class GameScript : MonoBehaviour
             GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;
             loc_instCard.GetComponent<CardSelectPrefabScript>().SetCard(lp_card);
             loc_instCard.transform.SetParent(cardListDisplay.transform, false);
+        }
+    }
+
+    public void DisplayCardListSelectMode(List<Card> arg_cardList, int arg_cardInDeckId)
+    {
+        ClearCardList();
+
+        foreach (Card lp_card in arg_cardList)
+        {
+            if (lp_card.GetInDeckId() != arg_cardInDeckId)
+            {
+                GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;
+                loc_instCard.GetComponent<CardSelectPrefabScript>().SetCard(lp_card);
+                loc_instCard.transform.SetParent(cardListDisplay.transform, false);
+            }
         }
     }
 
@@ -209,13 +224,13 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public void MoveSpecificCardFromListToOtherList(List<Card> arg_cardListRemove, int arg_inDeckId, List<Card> arg_cardListAdd)
+    public void MoveSpecificCardFromListToOtherList(List<Card> arg_cardListRemove, int arg_cardInDeckId, List<Card> arg_cardListAdd)
     {
         Card loc_selectedCard;
 
         foreach(Card card in arg_cardListRemove)
         {
-            if (card.GetInDeckId() == arg_inDeckId)
+            if (card.GetInDeckId() == arg_cardInDeckId)
             {
                 loc_selectedCard = card;
                 arg_cardListAdd.Add(loc_selectedCard);

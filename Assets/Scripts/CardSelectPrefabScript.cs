@@ -92,19 +92,19 @@ public class CardSelectPrefabScript : MonoBehaviour
         {
             if (gameScript.GetcurentActionState() == actionStateEnum.Play)
             {
-                SetupButtonView(0, "CardDetailButton_0", "Close");
+                SetupButtonView(0, "CardDetailViewButton_0", "Close");
                 CardDetailButtonsTable[0].onClick.AddListener(CloseCardDetailListener);
 
-                SetupButtonView(1, "CardDetailButton_1", "Play");
+                SetupButtonView(1, "CardDetailViewButton_1", "Play");
                 CardDetailButtonsTable[1].onClick.AddListener(PlayTemtemCardListener);
             }
 
             if (gameScript.GetcurentActionState() == actionStateEnum.Select)
             {
-                SetupButtonView(0, "CardDetailButton_0", "Cancel");
+                SetupButtonView(0, "CardDetailViewButton_0", "Cancel");
                 CardDetailButtonsTable[0].onClick.AddListener(CancelActionSelectionListener);
 
-                SetupButtonView(1, "CardDetailButton_1", "Select");
+                SetupButtonView(1, "CardDetailViewButton_1", "Select");
                 CardDetailButtonsTable[1].onClick.AddListener(SelectCardListener);
             }
         }
@@ -113,7 +113,7 @@ public class CardSelectPrefabScript : MonoBehaviour
         {
             if (gameScript.GetcurentActionState() == actionStateEnum.Play)
             {
-                SetupButtonView(0, "CardDetailButton_0", "Close");
+                SetupButtonView(0, "CardDetailViewButton_0", "Close");
                 CardDetailButtonsTable[0].onClick.AddListener(CloseCardDetailListener);
             }
         }
@@ -187,12 +187,10 @@ public class CardSelectPrefabScript : MonoBehaviour
         ClearCardButtonsDisplay();
 
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
-        cardDetailView.transform.SetParent(canvas.transform, true);
 
         gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         gameScript.SetCurentActionState(actionStateEnum.Select);
-        
-        SelectCardForDetailsListener();
+        gameScript.DisplayCardListSelectMode(gameScript.GetHandTamer_1(), card.GetInDeckId());
 
         gameScript.GetGamePrompt().text = "Select " + cardTemtem.GetPansuns() + " cards to discard from your Hand";
     }
@@ -204,10 +202,10 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void ClearCardButtonsDisplay()
     {
-        CardDetailViewButtonsTable[0] = GameObject.Find("CardDetailButton_0");
+        CardDetailViewButtonsTable[0] = GameObject.Find("CardDetailViewButton_0");
         CardDetailViewButtonsTable[0].transform.SetParent(outOfCanvasGameObject.transform, true);
 
-        CardDetailViewButtonsTable[1] = GameObject.Find("CardDetailButton_1");
+        CardDetailViewButtonsTable[1] = GameObject.Find("CardDetailViewButton_1");
         CardDetailViewButtonsTable[1].transform.SetParent(outOfCanvasGameObject.transform, true);
     }
 
