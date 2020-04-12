@@ -101,6 +101,7 @@ public class GameScript : MonoBehaviour
             SetcurentBrowsingLocation(browsingLocationEnum.TrashPile);
         });
 
+
         handPlayerButton.onClick.AddListener(() =>
         {
             SetcurentBrowsingLocation(browsingLocationEnum.Hand);
