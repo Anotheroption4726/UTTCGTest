@@ -46,7 +46,7 @@ public class GameScript : MonoBehaviour
         return curentActionState;
     }
 
-    public void SetcurentActionState(actionStateEnum arg_actionState)
+    public void SetCurentActionState(actionStateEnum arg_actionState)
     {
         curentActionState = arg_actionState;
     }
