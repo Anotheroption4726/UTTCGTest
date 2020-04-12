@@ -186,10 +186,15 @@ public class CardSelectPrefabScript : MonoBehaviour
 
         ClearCardButtonsDisplay();
 
+        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
+        cardDetailView.transform.SetParent(canvas.transform, true);
+
         gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         gameScript.SetCurentActionState(actionStateEnum.Select);
         
         SelectCardForDetailsListener();
+
+        gameScript.GetGamePrompt().text = "Select " + cardTemtem.GetPansuns() + " cards to discard from your Hand";
     }
 
     void SelectCardListener()

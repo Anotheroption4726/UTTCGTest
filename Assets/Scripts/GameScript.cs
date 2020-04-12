@@ -26,6 +26,11 @@ public class GameScript : MonoBehaviour
     private int cardSelectionTotalCards;
     private int cardSelectionCurrentCards;
 
+    public Text GetGamePrompt()
+    {
+        return gamePrompt;
+    }
+
     public List<Card> GetDeckTamer_1()
     {
         return backpackTamer_1;
