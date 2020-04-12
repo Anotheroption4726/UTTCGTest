@@ -5,6 +5,15 @@ using UnityEngine.UI;
 
 public class GameScript : MonoBehaviour
 {
+    private const int TOTAL_CARD_DISPLAY_BUTTONS = 2;
+
+    [SerializeField] private GameObject canvas;
+    [SerializeField] private GameObject outOfCanvasGameObject;
+    [SerializeField] private GameObject boardView;
+    [SerializeField] private GameObject cardDetailView;
+    [SerializeField] private GameObject[] cardDetailViewButtonsTable = new GameObject[TOTAL_CARD_DISPLAY_BUTTONS];
+    [SerializeField] private GameObject selectActionView;
+
     [SerializeField] private Text gamePrompt;
 
     [SerializeField] private Button backpackPlayerButton;
@@ -245,14 +254,14 @@ public class GameScript : MonoBehaviour
     void CancelActionSelectionListener()
     {
         Debug.Log("Action cancelled");
-        /*
-        ClearCardButtonsDisplay();
+
+        cardDetailViewButtonsTable[0].transform.SetParent(outOfCanvasGameObject.transform, true);
+        cardDetailViewButtonsTable[1].transform.SetParent(outOfCanvasGameObject.transform, true);
 
         cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
-        BoardView.transform.SetParent(canvas.transform, true);
+        boardView.transform.SetParent(canvas.transform, true);
 
-        gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
-        gameScript.SetCurentActionState(actionStateEnum.Play);
-        */
+        SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+        SetCurentActionState(actionStateEnum.Play);
     }
 }

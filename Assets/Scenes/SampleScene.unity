@@ -1197,6 +1197,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac5504dd8bc1014fa6e2a5bf12e2ff5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvas: {fileID: 1887487152}
+  outOfCanvasGameObject: {fileID: 807807165}
+  boardView: {fileID: 517308001}
+  cardDetailView: {fileID: 1542125122}
+  cardDetailViewButtonsTable:
+  - {fileID: 290260470}
+  - {fileID: 2017208252}
+  selectActionView: {fileID: 2024806178}
   gamePrompt: {fileID: 939382856}
   backpackPlayerButton: {fileID: 981721303}
   trashPilePlayerButton: {fileID: 1302001351}
