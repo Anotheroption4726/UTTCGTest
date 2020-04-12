@@ -37,6 +37,17 @@ public class GameScript : MonoBehaviour
     private int cardSelectionTotalCards;
     private int cardSelectionCurrentCards;
 
+
+
+
+
+
+
+
+    //
+    //  _____ Getters & Setters _____
+    //
+
     public GameObject GetCanvas()
     {
         return canvas;
@@ -106,41 +117,6 @@ public class GameScript : MonoBehaviour
         return curentBrowsingLocation;
     }
 
-    public void SetcurentBrowsingLocation(browsingLocationEnum arg_rowsingLocation)
-    {
-        if (arg_rowsingLocation == browsingLocationEnum.Hand)
-        {
-            gamePrompt.text = "Hand : " + handTamer_1.Count + " Card(s)";
-            DisplayCardListPlayMode(handTamer_1);
-        }
-
-        if (arg_rowsingLocation == browsingLocationEnum.Backpack)
-        {
-            gamePrompt.text = "Backpack : " + backpackTamer_1.Count + " Card(s)";
-            DisplayCardListPlayMode(backpackTamer_1);
-        }
-
-        if (arg_rowsingLocation == browsingLocationEnum.TrashPile)
-        {
-            gamePrompt.text = "Trash Pile : " + trashPileTamer_1.Count + " Card(s)";
-            DisplayCardListPlayMode(trashPileTamer_1);
-        }
-
-        curentBrowsingLocation = arg_rowsingLocation;
-    }
-
-    public void ToggleView(GameObject arg_view , bool arg_toggle)
-    {
-        if (arg_toggle)
-        {
-            arg_view.transform.SetParent(canvas.transform, true);
-        }
-        else
-        {
-            arg_view.transform.SetParent(outOfCanvasGameObject.transform, true);
-        }
-    }
-
     public List<Card> GetcardSelection()
     {
         return cardSelection;
@@ -150,6 +126,17 @@ public class GameScript : MonoBehaviour
     {
         cardSelection.Add(arg_card);
     }
+
+
+
+
+
+
+
+    
+    //
+    //  _____ Monobehavior Functions _____
+    //
 
     private void Awake()
     {
@@ -192,31 +179,69 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public void DeckInit()
+
+
+
+
+
+
+
+    //
+    //  _____ Navigation & display Functions _____
+    //
+
+    public void SetcurentBrowsingLocation(browsingLocationEnum arg_rowsingLocation)
     {
-        AddCardsToDeckByNameFromCollection(backpackTamer_1, "Nessla", 20, false);
-        AddCardsToDeckByNameFromCollection(backpackTamer_1, "Barnshe", 20, false);
-        AddCardsToDeckByNameFromCollection(backpackTamer_1, "Gyalis", 20, false);
-        cardInDeckIdCount = 0;
+        if (arg_rowsingLocation == browsingLocationEnum.Hand)
+        {
+            gamePrompt.text = "Hand : " + handTamer_1.Count + " Card(s)";
+            DisplayCardListPlayMode(handTamer_1);
+        }
+
+        if (arg_rowsingLocation == browsingLocationEnum.Backpack)
+        {
+            gamePrompt.text = "Backpack : " + backpackTamer_1.Count + " Card(s)";
+            DisplayCardListPlayMode(backpackTamer_1);
+        }
+
+        if (arg_rowsingLocation == browsingLocationEnum.TrashPile)
+        {
+            gamePrompt.text = "Trash Pile : " + trashPileTamer_1.Count + " Card(s)";
+            DisplayCardListPlayMode(trashPileTamer_1);
+        }
+
+        curentBrowsingLocation = arg_rowsingLocation;
     }
 
-    public void AddCardsToDeckByNameFromCollection(List<Card> arg_cardList, string arg_cardName, int arg_quantity, bool arg_uncovered)
+    public void ToggleView(GameObject arg_view , bool arg_toggle)
     {
-        Card loc_selectedCard = CardCollection.GetCardTemplatebyName(arg_cardName);
-        Card_Temtem loc_selectedCardTemtem;
-
-        if (loc_selectedCard.GetCardType() == cardTypesEnum.Temtem)
+        if (arg_toggle)
         {
-            loc_selectedCardTemtem = (Card_Temtem)loc_selectedCard;
+            arg_view.transform.SetParent(canvas.transform, true);
+        }
+        else
+        {
+            arg_view.transform.SetParent(outOfCanvasGameObject.transform, true);
+        }
+    }
 
-            for (int i = 0; i < arg_quantity; i++)
-            {
-                Card loc_addedCard = CardCollection.CreateNewCardTemtemFromTemplate(loc_selectedCardTemtem);
-                cardInDeckIdCount ++;
-                loc_addedCard.SetInDeckId(cardInDeckIdCount);
-                loc_addedCard.SetUncoveredStatus(arg_uncovered);
-                arg_cardList.Add(loc_addedCard);
-            }
+    public void CancelActionSelectionListener()
+    {
+        Debug.Log("Action cancelled");
+
+        SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+        SetCurentActionState(actionStateEnum.Play);
+
+        ClearCardButtonsViewDisplay();
+        ToggleView(selectActionView, false);
+        ToggleView(boardView, true);
+    }
+
+    public void ClearCardButtonsViewDisplay()
+    {
+        foreach (GameObject buttonView in cardDetailViewButtonsTable)
+        {
+            ToggleView(buttonView, false);
         }
     }
 
@@ -252,6 +277,45 @@ public class GameScript : MonoBehaviour
         foreach (Transform child in cardListDisplay.transform)
         {
             GameObject.Destroy(child.gameObject);
+        }
+    }
+
+
+
+
+
+
+
+
+    //
+    //  _____ Card manipulation Functions _____
+    //
+
+    public void DeckInit()
+    {
+        AddCardsToCardListByNameFromCollection(backpackTamer_1, "Nessla", 20, false);
+        AddCardsToCardListByNameFromCollection(backpackTamer_1, "Barnshe", 20, false);
+        AddCardsToCardListByNameFromCollection(backpackTamer_1, "Gyalis", 20, false);
+        cardInDeckIdCount = 0;
+    }
+
+    public void AddCardsToCardListByNameFromCollection(List<Card> arg_cardList, string arg_cardName, int arg_quantity, bool arg_uncovered)
+    {
+        Card loc_selectedCard = CardCollection.GetCardTemplatebyName(arg_cardName);
+        Card_Temtem loc_selectedCardTemtem;
+
+        if (loc_selectedCard.GetCardType() == cardTypesEnum.Temtem)
+        {
+            loc_selectedCardTemtem = (Card_Temtem)loc_selectedCard;
+
+            for (int i = 0; i < arg_quantity; i++)
+            {
+                Card loc_addedCard = CardCollection.CreateNewCardTemtemFromTemplate(loc_selectedCardTemtem);
+                cardInDeckIdCount ++;
+                loc_addedCard.SetInDeckId(cardInDeckIdCount);
+                loc_addedCard.SetUncoveredStatus(arg_uncovered);
+                arg_cardList.Add(loc_addedCard);
+            }
         }
     }
 
@@ -296,19 +360,5 @@ public class GameScript : MonoBehaviour
                 break;
             }
         }
-    }
-
-    void CancelActionSelectionListener()
-    {
-        Debug.Log("Action cancelled");
-
-        cardDetailViewButtonsTable[0].transform.SetParent(outOfCanvasGameObject.transform, true);
-        cardDetailViewButtonsTable[1].transform.SetParent(outOfCanvasGameObject.transform, true);
-
-        cardDetailView.transform.SetParent(outOfCanvasGameObject.transform, true);
-        boardView.transform.SetParent(canvas.transform, true);
-
-        SetcurentBrowsingLocation(browsingLocationEnum.Hand);
-        SetCurentActionState(actionStateEnum.Play);
     }
 }
