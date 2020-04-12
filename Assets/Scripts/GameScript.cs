@@ -36,6 +36,35 @@ public class GameScript : MonoBehaviour
     private int cardSelectionTotalCards;
     private int cardSelectionCurrentCards;
 
+    public GameObject GetCanvas()
+    {
+        return canvas;
+    }
+
+    public GameObject GetOutOfCanvasGameObject()
+    {
+        return outOfCanvasGameObject;
+    }
+    public GameObject GetBoardView()
+    {
+        return boardView;
+    }
+
+    public GameObject GetCardDetailView()
+    {
+        return cardDetailView;
+    }
+
+    public GameObject[] GetCardDetailViewButtonsTable()
+    {
+        return cardDetailViewButtonsTable;
+    }
+
+    public GameObject GetSelectActionView()
+    {
+        return selectActionView;
+    }
+
     public Text GetGamePrompt()
     {
         return gamePrompt;

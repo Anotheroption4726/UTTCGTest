@@ -13,7 +13,7 @@ public class CardSelectPrefabScript : MonoBehaviour
     private GameObject outOfCanvasGameObject;
     private GameObject boardView;
     private GameObject cardDetailView;
-    private GameObject[] cardDetailViewButtonsTable = new GameObject[TOTAL_BUTTONS];
+    private GameObject[] cardDetailViewButtonsTable; // = new GameObject[TOTAL_BUTTONS];
     private GameObject selectActionView;
 
     private Card card;
@@ -46,11 +46,12 @@ public class CardSelectPrefabScript : MonoBehaviour
 
         game = GameObject.Find("Game");
         gameScript = game.GetComponent<GameScript>();
-        canvas = GameObject.Find("Canvas");
-        outOfCanvasGameObject = GameObject.Find("OutOfCanvas");
-        boardView = GameObject.Find("BoardView");
-        cardDetailView = GameObject.Find("CardDetailView");
-        selectActionView = GameObject.Find("SelectActionView");
+        canvas = gameScript.GetCanvas();
+        outOfCanvasGameObject = gameScript.GetOutOfCanvasGameObject();
+        boardView = gameScript.GetBoardView();
+        cardDetailView = gameScript.GetCardDetailView();
+        selectActionView = gameScript.GetSelectActionView();
+        cardDetailViewButtonsTable = gameScript.GetCardDetailViewButtonsTable();
     }
 
     public void SetCard(Card arg_card)
@@ -104,9 +105,6 @@ public class CardSelectPrefabScript : MonoBehaviour
 
             if (gameScript.GetcurentActionState() == actionStateEnum.Select)
             {
-                //SetupButtonView(0, "CardDetailViewButton_0", "Cancel");
-                //CardDetailButtonsTable[0].onClick.AddListener(CancelActionSelectionListener);
-
                 SetupButtonView(0, "CardDetailViewButton_0", "Close");
                 cardDetailButtonsTable[0].onClick.AddListener(CloseCardDetailListener);
 
@@ -157,7 +155,7 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void SetupButtonView(int arg_buttonIndex, string arg_viewButtonName, string arg_buttonText)
     {
-        cardDetailViewButtonsTable[arg_buttonIndex] = GameObject.Find(arg_viewButtonName);
+        //cardDetailViewButtonsTable[arg_buttonIndex] = GameObject.Find(arg_viewButtonName);
         cardDetailViewButtonsTable[arg_buttonIndex].transform.SetParent(canvas.transform, true);
         cardDetailButtonsTable[arg_buttonIndex] = cardDetailViewButtonsTable[arg_buttonIndex].GetComponent<Button>();
         cardDetailButtonsTable[arg_buttonIndex].onClick.RemoveAllListeners();
