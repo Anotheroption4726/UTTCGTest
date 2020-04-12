@@ -5,15 +5,14 @@ using UnityEngine.UI;
 
 public class CardSelectPrefabScript : MonoBehaviour
 {
-    //private const int TOTAL_BUTTONS = 2;
-
     private GameObject game;
     private GameScript gameScript;
+
     private GameObject canvas;
     private GameObject outOfCanvasGameObject;
     private GameObject boardView;
     private GameObject cardDetailView;
-    private GameObject[] cardDetailViewButtonsTable; // = new GameObject[TOTAL_BUTTONS];
+    private GameObject[] cardDetailViewButtonsTable;
     private GameObject selectActionView;
 
     private Card card;
@@ -37,7 +36,7 @@ public class CardSelectPrefabScript : MonoBehaviour
     private Text cardTemtemDetailSTADisplay;
     private Text cardTemtemDetailTraitDisplay;
 
-    private Button[] cardDetailButtonsTable; // = new Button[TOTAL_BUTTONS];
+    private Button[] cardDetailButtonsTable;
 
     void Awake()
     {
