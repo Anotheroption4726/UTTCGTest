@@ -1204,6 +1204,9 @@ MonoBehaviour:
   cardDetailViewButtonsTable:
   - {fileID: 290260470}
   - {fileID: 2017208252}
+  cardDetailButtonsTable:
+  - {fileID: 290260472}
+  - {fileID: 2017208254}
   selectActionView: {fileID: 2024806178}
   gamePrompt: {fileID: 939382856}
   backpackPlayerButton: {fileID: 981721303}

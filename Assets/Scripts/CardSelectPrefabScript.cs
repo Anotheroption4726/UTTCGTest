@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CardSelectPrefabScript : MonoBehaviour
 {
-    private const int TOTAL_BUTTONS = 2;
+    //private const int TOTAL_BUTTONS = 2;
 
     private GameObject game;
     private GameScript gameScript;
@@ -37,7 +37,7 @@ public class CardSelectPrefabScript : MonoBehaviour
     private Text cardTemtemDetailSTADisplay;
     private Text cardTemtemDetailTraitDisplay;
 
-    private Button[] cardDetailButtonsTable = new Button[TOTAL_BUTTONS];
+    private Button[] cardDetailButtonsTable; // = new Button[TOTAL_BUTTONS];
 
     void Awake()
     {
@@ -52,6 +52,7 @@ public class CardSelectPrefabScript : MonoBehaviour
         cardDetailView = gameScript.GetCardDetailView();
         selectActionView = gameScript.GetSelectActionView();
         cardDetailViewButtonsTable = gameScript.GetCardDetailViewButtonsTable();
+        cardDetailButtonsTable = gameScript.GetCardDetailButtonsTable();
     }
 
     public void SetCard(Card arg_card)

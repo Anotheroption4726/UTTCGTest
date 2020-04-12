@@ -12,6 +12,7 @@ public class GameScript : MonoBehaviour
     [SerializeField] private GameObject boardView;
     [SerializeField] private GameObject cardDetailView;
     [SerializeField] private GameObject[] cardDetailViewButtonsTable = new GameObject[TOTAL_CARD_DISPLAY_BUTTONS];
+    [SerializeField] private Button[] cardDetailButtonsTable = new Button[TOTAL_CARD_DISPLAY_BUTTONS];
     [SerializeField] private GameObject selectActionView;
 
     [SerializeField] private Text gamePrompt;
@@ -58,6 +59,11 @@ public class GameScript : MonoBehaviour
     public GameObject[] GetCardDetailViewButtonsTable()
     {
         return cardDetailViewButtonsTable;
+    }
+
+    public Button[] GetCardDetailButtonsTable()
+    {
+        return cardDetailButtonsTable;
     }
 
     public GameObject GetSelectActionView()
@@ -121,6 +127,18 @@ public class GameScript : MonoBehaviour
         }
 
         curentBrowsingLocation = arg_rowsingLocation;
+    }
+
+    public void ToggleView(GameObject arg_view , bool arg_toggle)
+    {
+        if (arg_toggle)
+        {
+            arg_view.transform.SetParent(canvas.transform, true);
+        }
+        else
+        {
+            arg_view.transform.SetParent(outOfCanvasGameObject.transform, true);
+        }
     }
 
     public List<Card> GetcardSelection()
