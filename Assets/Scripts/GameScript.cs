@@ -17,6 +17,7 @@ public class GameScript : MonoBehaviour
     [SerializeField] private GameObject[] cardDetailViewButtonsTable = new GameObject[TOTAL_CARD_DISPLAY_BUTTONS];
     [SerializeField] private Button[] cardDetailButtonsTable = new Button[TOTAL_CARD_DISPLAY_BUTTONS];
 
+    [SerializeField] private LogScript gameLog;
     [SerializeField] private Text gamePrompt;
 
     [SerializeField] private Button backpackPlayerButton;
@@ -172,6 +173,23 @@ public class GameScript : MonoBehaviour
 
     private void Start()
     {
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("testing one two");
+
         activeTamer = new Tamer("Player 1", BackpackSetup());
         ShuffleCardList(activeTamer.GetBackpack());
         DrawCardsFromListAddToOtherList(activeTamer.GetBackpack(), activeTamer.GetHand(), 5, true);
