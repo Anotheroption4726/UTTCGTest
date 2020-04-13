@@ -173,22 +173,8 @@ public class GameScript : MonoBehaviour
 
     private void Start()
     {
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one twotesting one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
-        gameLog.AddLogText("testing one two");
+        gameLog.AddLogText("Testing One Two", Color.white);
+        gameLog.AddLogText("Testing One Two", Color.white);
 
         activeTamer = new Tamer("Player 1", BackpackSetup());
         ShuffleCardList(activeTamer.GetBackpack());

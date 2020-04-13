@@ -7,7 +7,7 @@ public class LogScript : MonoBehaviour
     [SerializeField] private GameObject logText;
     private List<GameObject> logTextList = new List<GameObject>();
 
-    public void AddLogText(string arg_newtext)
+    public void AddLogText(string arg_newtext, Color arg_color)
     {
         if (logTextList.Count == 50)
         {
@@ -19,7 +19,7 @@ public class LogScript : MonoBehaviour
         GameObject loc_newText = Instantiate(logText) as GameObject;
         loc_newText.SetActive(true);
 
-        loc_newText.GetComponent<LogTextItemScript>().SetText(arg_newtext);
+        loc_newText.GetComponent<LogTextItemScript>().SetText(arg_newtext, arg_color);
         loc_newText.transform.SetParent(logText.transform.parent, false);
 
         logTextList.Add(loc_newText.gameObject);
