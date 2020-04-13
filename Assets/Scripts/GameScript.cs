@@ -33,7 +33,7 @@ public class GameScript : MonoBehaviour
     private actionStateEnum curentActionState;
     private browsingLocationEnum curentBrowsingLocation;
 
-    private List<Card> cardSelection = new List<Card>();
+    private List<int> cardSelection = new List<int>();
     private int cardSelectionTotalCards;
     private int cardSelectionCurrentCards;
 
@@ -117,14 +117,9 @@ public class GameScript : MonoBehaviour
         return curentBrowsingLocation;
     }
 
-    public List<Card> GetcardSelection()
+    public List<int> GetcardSelection()
     {
         return cardSelection;
-    }
-
-    public void AddcardSelection(Card arg_card)
-    {
-        cardSelection.Add(arg_card);
     }
 
 
@@ -247,7 +242,7 @@ public class GameScript : MonoBehaviour
 
     public void DisplayCardListPlayMode(List<Card> arg_cardList)
     {
-        ClearCardList();
+        ClearDisplayCardList();
 
         foreach (Card lp_card in arg_cardList)
         {
@@ -259,7 +254,7 @@ public class GameScript : MonoBehaviour
 
     public void DisplayCardListSelectModeSingle(List<Card> arg_cardList, int arg_cardInDeckId)
     {
-        ClearCardList();
+        ClearDisplayCardList();
 
         foreach (Card lp_card in arg_cardList)
         {
@@ -272,13 +267,13 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public void DisplayCardListSelectModeList(List<Card> arg_cardList, List<Card> arg_selectedCardList)
+    public void DisplayCardListSelectModeList(List<Card> arg_cardList)
     {
-        ClearCardList();
+        ClearDisplayCardList();
 
         foreach (Card lp_card in arg_cardList)
         {
-            if (!CheckByDeckIdIfCardIsInCardList(arg_selectedCardList, lp_card.GetInDeckId()))
+            if (!CheckByDeckIdIfCardIsInSelectedCardList(lp_card.GetInDeckId()))
             {
                 GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;
                 loc_instCard.GetComponent<CardSelectPrefabScript>().SetCard(lp_card);
@@ -287,20 +282,7 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public bool CheckByDeckIdIfCardIsInCardList(List<Card> arg_cardList, int arg_cardInDeckId)
-    {
-        foreach (Card lp_card in arg_cardList)
-        {
-            if (lp_card.GetInDeckId() == arg_cardInDeckId)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void ClearCardList()
+    public void ClearDisplayCardList()
     {
         foreach (Transform child in cardListDisplay.transform)
         {
@@ -388,5 +370,22 @@ public class GameScript : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public bool CheckByDeckIdIfCardIsInSelectedCardList(int arg_cardInDeckId)
+    {
+        foreach (int lp_cardInDeckId in cardSelection)
+        {
+            if (lp_cardInDeckId == arg_cardInDeckId)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void AddcardToSelectionList(int arg_cardInDeckId)
+    {
+        cardSelection.Add(arg_cardInDeckId);
     }
 }
