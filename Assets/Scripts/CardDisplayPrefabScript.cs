@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardSelectPrefabScript : MonoBehaviour
+public class CardDisplayPrefabScript : MonoBehaviour
 {
     private GameObject game;
     private GameScript gameScript;
@@ -173,7 +173,7 @@ public class CardSelectPrefabScript : MonoBehaviour
         gameScript.SetCardSelectionTotalCards(cardTemtem.GetPansuns());
         gameScript.SetCardSelectionCurrentCards(0);
 
-        gameScript.DisplayCardListSelectModeList(gameScript.GetHandTamer_1());
+        gameScript.DisplayCardListSelectModeList(gameScript.GetActiveTamer().GetHand());
         gameScript.GetGamePrompt().text = "Select " + gameScript.GetCardSelectionTotalCards() + " cards from your Hand (" + gameScript.GetCardSelectionCurrentCards() + "/" + gameScript.GetCardSelectionTotalCards() + ")";
         
         Debug.Log("Playing Card: " + card.GetInDeckId());
@@ -183,7 +183,7 @@ public class CardSelectPrefabScript : MonoBehaviour
     {
         if (gameScript.GetCardSelectionCurrentCards() < gameScript.GetCardSelectionTotalCards() - 1)
         {
-            SelectCard(gameScript.GetHandTamer_1());
+            SelectCard(gameScript.GetActiveTamer().GetHand());
             gameScript.SetCardSelectionCurrentCards(gameScript.GetCardSelectionCurrentCards() + 1);
 
             gameScript.GetGamePrompt().text = "Select " + gameScript.GetCardSelectionTotalCards() + " cards from your Hand (" + gameScript.GetCardSelectionCurrentCards() + "/" + gameScript.GetCardSelectionTotalCards() + ")";
@@ -191,13 +191,13 @@ public class CardSelectPrefabScript : MonoBehaviour
         }
         else
         {
-            SelectCard(gameScript.GetHandTamer_1());
+            SelectCard(gameScript.GetActiveTamer().GetHand());
 
             foreach (int cardInDeckId in gameScript.GetcardSelection())
             {
                 if (gameScript.GetcardSelection().IndexOf(cardInDeckId) != 0)
                 {
-                    gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetHandTamer_1(), cardInDeckId, gameScript.GetTrashPileTamer_1());
+                    gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetActiveTamer().GetHand(), cardInDeckId, gameScript.GetActiveTamer().GetTrashPile());
                 }
             }
 
@@ -216,12 +216,5 @@ public class CardSelectPrefabScript : MonoBehaviour
 
         gameScript.AddcardToSelectionList(card.GetInDeckId());
         gameScript.DisplayCardListSelectModeList(arg_cardList);
-    }
-
-    void TEST_DiscardCardFromHand()
-    {
-        gameScript.ClearCardButtonsViewDisplay();
-        gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetHandTamer_1(), card.GetInDeckId(), gameScript.GetTrashPileTamer_1());
-        gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
     }
 }

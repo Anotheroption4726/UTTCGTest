@@ -25,12 +25,12 @@ public class GameScript : MonoBehaviour
     [SerializeField] private Button cancelActionButton;
 
     [SerializeField] private GameObject cardListDisplay;
-    [SerializeField] private GameObject CardSelectPrefab;
+    [SerializeField] private GameObject CardDisplayPrefab;
 
     private int cardInDeckIdCount = 0;
-    private List<Card> backpackTamer_1 = new List<Card>();
-    private List<Card> trashPileTamer_1 = new List<Card>();
-    private List<Card> handTamer_1 = new List<Card>();
+
+    private Tamer activeTamer;
+    private Tamer passiveTamer;
 
     private actionStateEnum curentActionState;
     private browsingLocationEnum curentBrowsingLocation;
@@ -89,19 +89,14 @@ public class GameScript : MonoBehaviour
         return gamePrompt;
     }
 
-    public List<Card> GetDeckTamer_1()
+    public Tamer GetActiveTamer()
     {
-        return backpackTamer_1;
+        return activeTamer;
     }
 
-    public List<Card> GetTrashPileTamer_1()
+    public Tamer GetPassiveTamer()
     {
-        return trashPileTamer_1;
-    }
-
-    public List<Card> GetHandTamer_1()
-    {
-        return handTamer_1;
+        return passiveTamer;
     }
 
     public actionStateEnum GetcurentActionState()
@@ -177,21 +172,22 @@ public class GameScript : MonoBehaviour
 
     private void Start()
     {
-        DeckInit();
-        ShuffleCardList(backpackTamer_1);
-        DrawCardsFromListAddToOtherList(backpackTamer_1, handTamer_1, 5, true);
+        activeTamer = new Tamer("Player 1", BackpackSetup());
+        ShuffleCardList(activeTamer.GetBackpack());
+        DrawCardsFromListAddToOtherList(activeTamer.GetBackpack(), activeTamer.GetHand(), 5, true);
+
         curentActionState = actionStateEnum.Play;
         SetcurentBrowsingLocation(browsingLocationEnum.Hand);
 
-        MoveSpecificCardFromListToOtherList(backpackTamer_1, backpackTamer_1[0].GetInDeckId(), trashPileTamer_1);
-        trashPileTamer_1[0].SetUncoveredStatus(true);
+        MoveSpecificCardFromListToOtherList(activeTamer.GetBackpack(), activeTamer.GetBackpack()[0].GetInDeckId(), activeTamer.GetTrashPile());
+        activeTamer.GetTrashPile()[0].SetUncoveredStatus(true);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown("space"))
         {
-            DrawCardsFromListAddToOtherList(backpackTamer_1, handTamer_1, 1, true);
+            DrawCardsFromListAddToOtherList(activeTamer.GetBackpack(), activeTamer.GetHand(), 1, true);
             SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         }
     }
@@ -211,20 +207,20 @@ public class GameScript : MonoBehaviour
     {
         if (arg_rowsingLocation == browsingLocationEnum.Hand)
         {
-            gamePrompt.text = "Hand : " + handTamer_1.Count + " Card(s)";
-            DisplayCardListPlayMode(handTamer_1);
+            gamePrompt.text = "Hand : " + activeTamer.GetHand().Count + " Card(s)";
+            DisplayCardListPlayMode(activeTamer.GetHand());
         }
 
         if (arg_rowsingLocation == browsingLocationEnum.Backpack)
         {
-            gamePrompt.text = "Backpack : " + backpackTamer_1.Count + " Card(s)";
-            DisplayCardListPlayMode(backpackTamer_1);
+            gamePrompt.text = "Backpack : " + activeTamer.GetBackpack().Count + " Card(s)";
+            DisplayCardListPlayMode(activeTamer.GetBackpack());
         }
 
         if (arg_rowsingLocation == browsingLocationEnum.TrashPile)
         {
-            gamePrompt.text = "Trash Pile : " + trashPileTamer_1.Count + " Card(s)";
-            DisplayCardListPlayMode(trashPileTamer_1);
+            gamePrompt.text = "Trash Pile : " + activeTamer.GetTrashPile().Count + " Card(s)";
+            DisplayCardListPlayMode(activeTamer.GetTrashPile());
         }
 
         curentBrowsingLocation = arg_rowsingLocation;
@@ -272,8 +268,8 @@ public class GameScript : MonoBehaviour
 
         foreach (Card lp_card in arg_cardList)
         {
-            GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;
-            loc_instCard.GetComponent<CardSelectPrefabScript>().SetCard(lp_card);
+            GameObject loc_instCard = Instantiate(CardDisplayPrefab) as GameObject;
+            loc_instCard.GetComponent<CardDisplayPrefabScript>().SetCard(lp_card);
             loc_instCard.transform.SetParent(cardListDisplay.transform, false);
         }
     }
@@ -286,8 +282,8 @@ public class GameScript : MonoBehaviour
         {
             if (lp_card.GetInDeckId() != arg_cardInDeckId)
             {
-                GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;
-                loc_instCard.GetComponent<CardSelectPrefabScript>().SetCard(lp_card);
+                GameObject loc_instCard = Instantiate(CardDisplayPrefab) as GameObject;
+                loc_instCard.GetComponent<CardDisplayPrefabScript>().SetCard(lp_card);
                 loc_instCard.transform.SetParent(cardListDisplay.transform, false);
             }
         }
@@ -301,8 +297,8 @@ public class GameScript : MonoBehaviour
         {
             if (!CheckByDeckIdIfCardIsInSelectedCardList(lp_card.GetInDeckId()))
             {
-                GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;
-                loc_instCard.GetComponent<CardSelectPrefabScript>().SetCard(lp_card);
+                GameObject loc_instCard = Instantiate(CardDisplayPrefab) as GameObject;
+                loc_instCard.GetComponent<CardDisplayPrefabScript>().SetCard(lp_card);
                 loc_instCard.transform.SetParent(cardListDisplay.transform, false);
             }
         }
@@ -327,15 +323,19 @@ public class GameScript : MonoBehaviour
     //  _____ Card manipulation Functions _____
     //
 
-    public void DeckInit()
+    public List<Card> BackpackSetup()
     {
-        AddCardsToCardListByNameFromCollection(backpackTamer_1, "Nessla", 20, false);
-        AddCardsToCardListByNameFromCollection(backpackTamer_1, "Barnshe", 20, false);
-        AddCardsToCardListByNameFromCollection(backpackTamer_1, "Gyalis", 20, false);
+        List<Card>  loc_backpack = new List<Card>();
+
+        AddCardsToBackpackFromCollection(loc_backpack, "Nessla", 20, false);
+        AddCardsToBackpackFromCollection(loc_backpack, "Barnshe", 20, false);
+        AddCardsToBackpackFromCollection(loc_backpack, "Gyalis", 20, false);
+
         cardInDeckIdCount = 0;
+        return loc_backpack;
     }
 
-    public void AddCardsToCardListByNameFromCollection(List<Card> arg_cardList, string arg_cardName, int arg_quantity, bool arg_uncovered)
+    public void AddCardsToBackpackFromCollection(List<Card> arg_cardList, string arg_cardName, int arg_quantity, bool arg_uncovered)
     {
         Card loc_selectedCard = CardCollection.GetCardTemplatebyName(arg_cardName);
         Card_Temtem loc_selectedCardTemtem;
