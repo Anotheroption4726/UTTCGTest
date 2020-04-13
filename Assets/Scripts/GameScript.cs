@@ -9,11 +9,13 @@ public class GameScript : MonoBehaviour
 
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject outOfCanvasGameObject;
+
     [SerializeField] private GameObject boardView;
+    [SerializeField] private GameObject selectActionView;
+
     [SerializeField] private GameObject cardDetailView;
     [SerializeField] private GameObject[] cardDetailViewButtonsTable = new GameObject[TOTAL_CARD_DISPLAY_BUTTONS];
     [SerializeField] private Button[] cardDetailButtonsTable = new Button[TOTAL_CARD_DISPLAY_BUTTONS];
-    [SerializeField] private GameObject selectActionView;
 
     [SerializeField] private Text gamePrompt;
 
@@ -170,7 +172,7 @@ public class GameScript : MonoBehaviour
             SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         });
 
-        cancelActionButton.onClick.AddListener(CancelActionSelectionListener);
+        cancelActionButton.onClick.AddListener(EndActionSelectionListener);
     }
 
     private void Start()
@@ -240,7 +242,7 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public void CancelActionSelectionListener()
+    public void EndActionSelectionListener()
     {
         Debug.Log("Action cancelled");
 
