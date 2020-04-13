@@ -174,16 +174,26 @@ public class CardSelectPrefabScript : MonoBehaviour
         gameScript.SetCardSelectionCurrentCards(0);
 
         gameScript.DisplayCardListSelectModeList(gameScript.GetHandTamer_1());
-        gameScript.GetGamePrompt().text = "Select " + gameScript.GetCardSelectionTotalCards() + " cards to discard from your Hand";
+        gameScript.GetGamePrompt().text = "Select " + gameScript.GetCardSelectionTotalCards() + " cards to discard from your Hand (" + gameScript.GetCardSelectionCurrentCards() + "/" + gameScript.GetCardSelectionTotalCards() + ")";
+        
         Debug.Log("Card played: " + card.GetInDeckId());
     }
 
     void SelectCardToPlayTemtemCardListener()
     {
-        SelectCard(gameScript.GetHandTamer_1());
+        if (gameScript.GetCardSelectionCurrentCards() < gameScript.GetCardSelectionTotalCards() - 1)
+        {
+            SelectCard(gameScript.GetHandTamer_1());
 
-        gameScript.GetGamePrompt().text = "Select " + gameScript.GetCardSelectionTotalCards() + " cards to discard from your Hand";
-        Debug.Log("Card Selected: " + card.GetInDeckId());
+            gameScript.SetCardSelectionCurrentCards(gameScript.GetCardSelectionCurrentCards() + 1);
+
+            gameScript.GetGamePrompt().text = "Select " + gameScript.GetCardSelectionTotalCards() + " cards to discard from your Hand (" + gameScript.GetCardSelectionCurrentCards() + "/" + gameScript.GetCardSelectionTotalCards() + ")";
+            Debug.Log("Card Selected: " + card.GetInDeckId());
+        }
+        else
+        {
+            Debug.Log("Card played");
+        }
     }
 
     void SelectCard(List<Card> arg_cardList)

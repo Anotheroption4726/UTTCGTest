@@ -34,8 +34,8 @@ public class GameScript : MonoBehaviour
     private browsingLocationEnum curentBrowsingLocation;
 
     private List<int> cardSelection = new List<int>();
-    private int cardSelectionTotalCards;
-    private int cardSelectionCurrentCards;
+    private int cardSelectionTotalCards = 0;
+    private int cardSelectionCurrentCards = 0;
 
 
 
