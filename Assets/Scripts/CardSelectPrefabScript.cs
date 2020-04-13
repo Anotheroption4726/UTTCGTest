@@ -93,7 +93,7 @@ public class CardSelectPrefabScript : MonoBehaviour
                 gameScript.GetCardDetailButtonsTable()[0].onClick.AddListener(CloseCardDetailListener);
 
                 SetupButtonView(1, "Select");
-                gameScript.GetCardDetailButtonsTable()[1].onClick.AddListener(SelectCardListener);
+                gameScript.GetCardDetailButtonsTable()[1].onClick.AddListener(SelectCardToPlayTemtemCardListener);
             }
         }
 
@@ -170,22 +170,30 @@ public class CardSelectPrefabScript : MonoBehaviour
         gameScript.ToggleView(gameScript.GetSelectActionView(), true);
 
         gameScript.AddcardToSelectionList(card.GetInDeckId());
-        gameScript.DisplayCardListSelectModeList(gameScript.GetHandTamer_1());
-        gameScript.GetGamePrompt().text = "Select " + cardTemtem.GetPansuns() + " cards to discard from your Hand";
+        gameScript.SetCardSelectionTotalCards(cardTemtem.GetPansuns());
+        gameScript.SetCardSelectionCurrentCards(0);
 
+        gameScript.DisplayCardListSelectModeList(gameScript.GetHandTamer_1());
+        gameScript.GetGamePrompt().text = "Select " + gameScript.GetCardSelectionTotalCards() + " cards to discard from your Hand";
         Debug.Log("Card played: " + card.GetInDeckId());
     }
 
-    void SelectCardListener()
+    void SelectCardToPlayTemtemCardListener()
+    {
+        SelectCard(gameScript.GetHandTamer_1());
+
+        gameScript.GetGamePrompt().text = "Select " + gameScript.GetCardSelectionTotalCards() + " cards to discard from your Hand";
+        Debug.Log("Card Selected: " + card.GetInDeckId());
+    }
+
+    void SelectCard(List<Card> arg_cardList)
     {
         gameScript.ClearCardButtonsViewDisplay();
         gameScript.ToggleView(gameScript.GetCardDetailView(), false);
         gameScript.ToggleView(gameScript.GetSelectActionView(), true);
 
         gameScript.AddcardToSelectionList(card.GetInDeckId());
-        gameScript.DisplayCardListSelectModeList(gameScript.GetHandTamer_1());
-
-        Debug.Log("Card Selected: " + card.GetInDeckId());
+        gameScript.DisplayCardListSelectModeList(arg_cardList);
     }
 
     void TEST_DiscardCardFromHand()

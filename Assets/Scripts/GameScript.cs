@@ -122,13 +122,33 @@ public class GameScript : MonoBehaviour
         return cardSelection;
     }
 
+    public int GetCardSelectionTotalCards()
+    {
+        return cardSelectionTotalCards;
+    }
+
+    public void SetCardSelectionTotalCards(int arg_cardQuantity)
+    {
+        cardSelectionTotalCards = arg_cardQuantity;
+    }
+
+    public int GetCardSelectionCurrentCards()
+    {
+        return cardSelectionCurrentCards;
+    }
+
+    public void SetCardSelectionCurrentCards(int arg_cardQuantity)
+    {
+        cardSelectionCurrentCards = arg_cardQuantity;
+    }
 
 
 
 
 
 
-    
+
+
     //
     //  _____ Monobehavior Functions _____
     //
@@ -225,6 +245,8 @@ public class GameScript : MonoBehaviour
         Debug.Log("Action cancelled");
 
         cardSelection = new List<int>();
+        cardSelectionTotalCards = 0;
+        cardSelectionCurrentCards = 0;
 
         SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         SetCurentActionState(actionStateEnum.Play);
