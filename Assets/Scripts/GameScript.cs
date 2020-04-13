@@ -257,7 +257,7 @@ public class GameScript : MonoBehaviour
         }
     }
 
-    public void DisplayCardListSelectMode(List<Card> arg_cardList, int arg_cardInDeckId)
+    public void DisplayCardListSelectModeSingle(List<Card> arg_cardList, int arg_cardInDeckId)
     {
         ClearCardList();
 
@@ -270,6 +270,34 @@ public class GameScript : MonoBehaviour
                 loc_instCard.transform.SetParent(cardListDisplay.transform, false);
             }
         }
+    }
+
+    public void DisplayCardListSelectModeList(List<Card> arg_cardList, List<Card> arg_selectedCardList)
+    {
+        ClearCardList();
+
+        foreach (Card lp_card in arg_cardList)
+        {
+            if (!CheckByDeckIdIfCardIsInCardList(arg_selectedCardList, lp_card.GetInDeckId()))
+            {
+                GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;
+                loc_instCard.GetComponent<CardSelectPrefabScript>().SetCard(lp_card);
+                loc_instCard.transform.SetParent(cardListDisplay.transform, false);
+            }
+        }
+    }
+
+    public bool CheckByDeckIdIfCardIsInCardList(List<Card> arg_cardList, int arg_cardInDeckId)
+    {
+        foreach (Card lp_card in arg_cardList)
+        {
+            if (lp_card.GetInDeckId() == arg_cardInDeckId)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void ClearCardList()
@@ -350,11 +378,11 @@ public class GameScript : MonoBehaviour
     {
         Card loc_selectedCard;
 
-        foreach(Card card in arg_cardListRemove)
+        foreach(Card lp_card in arg_cardListRemove)
         {
-            if (card.GetInDeckId() == arg_cardInDeckId)
+            if (lp_card.GetInDeckId() == arg_cardInDeckId)
             {
-                loc_selectedCard = card;
+                loc_selectedCard = lp_card;
                 arg_cardListAdd.Add(loc_selectedCard);
                 arg_cardListRemove.Remove(loc_selectedCard);
                 break;

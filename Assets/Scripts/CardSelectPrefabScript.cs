@@ -171,7 +171,7 @@ public class CardSelectPrefabScript : MonoBehaviour
         gameScript.ToggleView(gameScript.GetCardDetailView(), false);
         gameScript.ToggleView(gameScript.GetSelectActionView(), true);
 
-        gameScript.DisplayCardListSelectMode(gameScript.GetHandTamer_1(), card.GetInDeckId());
+        gameScript.DisplayCardListSelectModeSingle(gameScript.GetHandTamer_1(), card.GetInDeckId());
         gameScript.GetGamePrompt().text = "Select " + cardTemtem.GetPansuns() + " cards to discard from your Hand";
     }
 
