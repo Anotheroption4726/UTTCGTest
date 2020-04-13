@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 45856585}
   - component: {fileID: 45856587}
   m_Layer: 5
-  m_Name: Viewport
+  m_Name: LogViewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -861,7 +861,7 @@ GameObject:
   - component: {fileID: 466542153}
   - component: {fileID: 466542152}
   m_Layer: 5
-  m_Name: Content
+  m_Name: LogContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
