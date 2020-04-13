@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CardSelectPrefabScript : MonoBehaviour
+public class CardDisplayPrefabScript : MonoBehaviour
 {
     private GameObject game;
     private GameScript gameScript;

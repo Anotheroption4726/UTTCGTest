@@ -25,7 +25,7 @@ public class GameScript : MonoBehaviour
     [SerializeField] private Button cancelActionButton;
 
     [SerializeField] private GameObject cardListDisplay;
-    [SerializeField] private GameObject CardSelectPrefab;
+    [SerializeField] private GameObject CardDisplayPrefab;
 
     private int cardInDeckIdCount = 0;
 
@@ -268,8 +268,8 @@ public class GameScript : MonoBehaviour
 
         foreach (Card lp_card in arg_cardList)
         {
-            GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;
-            loc_instCard.GetComponent<CardSelectPrefabScript>().SetCard(lp_card);
+            GameObject loc_instCard = Instantiate(CardDisplayPrefab) as GameObject;
+            loc_instCard.GetComponent<CardDisplayPrefabScript>().SetCard(lp_card);
             loc_instCard.transform.SetParent(cardListDisplay.transform, false);
         }
     }
@@ -282,8 +282,8 @@ public class GameScript : MonoBehaviour
         {
             if (lp_card.GetInDeckId() != arg_cardInDeckId)
             {
-                GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;
-                loc_instCard.GetComponent<CardSelectPrefabScript>().SetCard(lp_card);
+                GameObject loc_instCard = Instantiate(CardDisplayPrefab) as GameObject;
+                loc_instCard.GetComponent<CardDisplayPrefabScript>().SetCard(lp_card);
                 loc_instCard.transform.SetParent(cardListDisplay.transform, false);
             }
         }
@@ -297,8 +297,8 @@ public class GameScript : MonoBehaviour
         {
             if (!CheckByDeckIdIfCardIsInSelectedCardList(lp_card.GetInDeckId()))
             {
-                GameObject loc_instCard = Instantiate(CardSelectPrefab) as GameObject;
-                loc_instCard.GetComponent<CardSelectPrefabScript>().SetCard(lp_card);
+                GameObject loc_instCard = Instantiate(CardDisplayPrefab) as GameObject;
+                loc_instCard.GetComponent<CardDisplayPrefabScript>().SetCard(lp_card);
                 loc_instCard.transform.SetParent(cardListDisplay.transform, false);
             }
         }

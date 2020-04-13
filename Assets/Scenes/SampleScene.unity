@@ -1200,6 +1200,7 @@ MonoBehaviour:
   canvas: {fileID: 1887487152}
   outOfCanvasGameObject: {fileID: 807807165}
   boardView: {fileID: 517308001}
+  selectActionView: {fileID: 2024806178}
   cardDetailView: {fileID: 1542125122}
   cardDetailViewButtonsTable:
   - {fileID: 290260470}
@@ -1207,14 +1208,13 @@ MonoBehaviour:
   cardDetailButtonsTable:
   - {fileID: 290260472}
   - {fileID: 2017208254}
-  selectActionView: {fileID: 2024806178}
   gamePrompt: {fileID: 939382856}
   backpackPlayerButton: {fileID: 981721303}
   trashPilePlayerButton: {fileID: 1302001351}
   handPlayerButton: {fileID: 594306198}
   cancelActionButton: {fileID: 1598350754}
   cardListDisplay: {fileID: 519308323}
-  CardSelectPrefab: {fileID: 3994924615174746453, guid: 30d7709517bfb7f4eb9f0075266c7749,
+  CardDisplayPrefab: {fileID: 3994924615174746453, guid: 30d7709517bfb7f4eb9f0075266c7749,
     type: 3}
 --- !u!1 &749317139
 GameObject:
