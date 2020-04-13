@@ -175,7 +175,6 @@ public class GameScript : MonoBehaviour
     {
         gameLog.AddLogText("Log Text", Color.white);
         gameLog.AddLogText("Log Text", Color.white);
-        gameLog.AddLogText("Log Text Log Text Log Text Log Text Log Text Log Text Log Text Log Text Log Text Log Text Log Text Log Text Log Text Log Text Log Text Log Text", Color.white);
         gameLog.AddLogText("Log Text", Color.white);
 
         activeTamer = new Tamer("Player 1", BackpackSetup());

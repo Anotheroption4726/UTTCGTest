@@ -5,6 +5,7 @@ using UnityEngine;
 public class LogScript : MonoBehaviour
 {
     [SerializeField] private GameObject logText;
+    [SerializeField] private GameObject logContentView;
     private List<GameObject> logTextList = new List<GameObject>();
 
     public void AddLogText(string arg_newtext, Color arg_color)
@@ -16,12 +17,12 @@ public class LogScript : MonoBehaviour
             logTextList.Remove(loc_tempItem);
         }
 
-        GameObject loc_newText = Instantiate(logText) as GameObject;
-        loc_newText.SetActive(true);
+        GameObject loc_newLogText = Instantiate(logText) as GameObject;
+        loc_newLogText.SetActive(true);
 
-        loc_newText.GetComponent<LogTextItemScript>().SetText(arg_newtext, arg_color);
-        loc_newText.transform.SetParent(logText.transform.parent, false);
+        loc_newLogText.GetComponent<LogTextItemScript>().SetText(arg_newtext, arg_color);
+        loc_newLogText.transform.SetParent(logContentView.transform, false);
 
-        logTextList.Add(loc_newText.gameObject);
+        logTextList.Add(loc_newLogText.gameObject);
     }
 }
