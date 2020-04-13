@@ -10,6 +10,7 @@ public class GameScript : MonoBehaviour
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject outOfCanvasGameObject;
 
+    [SerializeField] private GameObject logView;
     [SerializeField] private GameObject boardView;
     [SerializeField] private GameObject selectActionView;
 
@@ -60,6 +61,12 @@ public class GameScript : MonoBehaviour
     {
         return outOfCanvasGameObject;
     }
+
+    public GameObject GetLogView()
+    {
+        return logView;
+    }
+
     public GameObject GetBoardView()
     {
         return boardView;
@@ -88,6 +95,11 @@ public class GameScript : MonoBehaviour
     public Text GetGamePrompt()
     {
         return gamePrompt;
+    }
+
+    public LogScript GetGameLog()
+    {
+        return gameLog;
     }
 
     public Tamer GetActiveTamer()
@@ -155,17 +167,17 @@ public class GameScript : MonoBehaviour
     {
         backpackPlayerButton.onClick.AddListener(() =>
         {
-            SetcurentBrowsingLocation(browsingLocationEnum.Backpack);
+            SetCurentBrowsingLocation(browsingLocationEnum.Backpack);
         });
 
         trashPilePlayerButton.onClick.AddListener(() =>
         {
-            SetcurentBrowsingLocation(browsingLocationEnum.TrashPile);
+            SetCurentBrowsingLocation(browsingLocationEnum.TrashPile);
         });
 
         handPlayerButton.onClick.AddListener(() =>
         {
-            SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+            SetCurentBrowsingLocation(browsingLocationEnum.Hand);
         });
 
         cancelActionButton.onClick.AddListener(EndActionSelectionListener);
@@ -173,16 +185,14 @@ public class GameScript : MonoBehaviour
 
     private void Start()
     {
-        gameLog.AddLogText("Log Text", Color.white);
-        gameLog.AddLogText("Log Text", Color.white);
-        gameLog.AddLogText("Log Text", Color.white);
+        //gameLog.AddLogText("Game Started", Color.white);
 
         activeTamer = new Tamer("Player 1", BackpackSetup());
         ShuffleCardList(activeTamer.GetBackpack());
         DrawCardsFromListAddToOtherList(activeTamer.GetBackpack(), activeTamer.GetHand(), 5, true);
 
         curentActionState = actionStateEnum.Play;
-        SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+        SetCurentBrowsingLocation(browsingLocationEnum.Hand);
 
         MoveSpecificCardFromListToOtherList(activeTamer.GetBackpack(), activeTamer.GetBackpack()[0].GetInDeckId(), activeTamer.GetTrashPile());
         activeTamer.GetTrashPile()[0].SetUncoveredStatus(true);
@@ -193,7 +203,7 @@ public class GameScript : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             DrawCardsFromListAddToOtherList(activeTamer.GetBackpack(), activeTamer.GetHand(), 1, true);
-            SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+            SetCurentBrowsingLocation(browsingLocationEnum.Hand);
         }
     }
 
@@ -208,7 +218,7 @@ public class GameScript : MonoBehaviour
     //  _____ Navigation & display Functions _____
     //
 
-    public void SetcurentBrowsingLocation(browsingLocationEnum arg_rowsingLocation)
+    public void SetCurentBrowsingLocation(browsingLocationEnum arg_rowsingLocation)
     {
         if (arg_rowsingLocation == browsingLocationEnum.Hand)
         {
@@ -251,11 +261,12 @@ public class GameScript : MonoBehaviour
         cardSelectionTotalCards = 0;
         cardSelectionCurrentCards = 0;
 
-        SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+        SetCurentBrowsingLocation(browsingLocationEnum.Hand);
         SetCurentActionState(actionStateEnum.Play);
 
         ClearCardButtonsViewDisplay();
         ToggleView(selectActionView, false);
+        ToggleView(GetLogView(), true);
         ToggleView(boardView, true);
     }
 

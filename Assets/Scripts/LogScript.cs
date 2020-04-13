@@ -20,7 +20,7 @@ public class LogScript : MonoBehaviour
         GameObject loc_newLogText = Instantiate(logText) as GameObject;
         loc_newLogText.SetActive(true);
 
-        loc_newLogText.GetComponent<LogTextItemScript>().SetText(arg_newtext, arg_color);
+        loc_newLogText.GetComponent<LogTextPrefabScript>().SetText(arg_newtext, arg_color);
         loc_newLogText.transform.SetParent(logContentView.transform, false);
 
         logTextList.Add(loc_newLogText.gameObject);

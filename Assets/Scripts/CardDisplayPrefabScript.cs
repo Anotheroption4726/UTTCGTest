@@ -68,6 +68,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
     {
         Debug.Log("Card Info: " + card.GetInDeckId());
 
+        gameScript.ToggleView(gameScript.GetLogView(), false);
         gameScript.ToggleView(gameScript.GetBoardView(), false);
         gameScript.ToggleView(gameScript.GetSelectActionView(), false);
         gameScript.ToggleView(gameScript.GetCardDetailView(), true);
@@ -151,6 +152,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
 
         if (gameScript.GetcurentActionState() == actionStateEnum.Play)
         {
+            gameScript.ToggleView(gameScript.GetLogView(), true);
             gameScript.ToggleView(gameScript.GetBoardView(), true);
         }
 
@@ -162,7 +164,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
 
     void PlayTemtemCardListener()
     {
-        gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+        gameScript.SetCurentBrowsingLocation(browsingLocationEnum.Hand);
         gameScript.SetCurentActionState(actionStateEnum.Select);
 
         gameScript.ClearCardButtonsViewDisplay();
@@ -203,8 +205,9 @@ public class CardDisplayPrefabScript : MonoBehaviour
 
             gameScript.ToggleView(gameScript.GetCardDetailView(), false);
             gameScript.EndActionSelectionListener();
+            gameScript.ToggleView(gameScript.GetLogView(), true);
 
-            Debug.Log("Card played");
+            gameScript.GetGameLog().AddLogText("<b>" + gameScript.GetActiveTamer().GetName() + "</b>" + " played a <b>Temtem</b> Card.", Color.white);
         }
     }
 
@@ -212,6 +215,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
     {
         gameScript.ClearCardButtonsViewDisplay();
         gameScript.ToggleView(gameScript.GetCardDetailView(), false);
+        gameScript.ToggleView(gameScript.GetLogView(), false);
         gameScript.ToggleView(gameScript.GetSelectActionView(), true);
 
         gameScript.AddcardToSelectionList(card.GetInDeckId());

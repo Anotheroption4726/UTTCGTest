@@ -1474,6 +1474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1887487152}
   outOfCanvasGameObject: {fileID: 807807165}
+  logView: {fileID: 1895005400}
   boardView: {fileID: 517308001}
   selectActionView: {fileID: 2024806178}
   cardDetailView: {fileID: 1542125122}
