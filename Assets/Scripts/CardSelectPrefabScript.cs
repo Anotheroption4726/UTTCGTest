@@ -162,8 +162,6 @@ public class CardSelectPrefabScript : MonoBehaviour
 
     void PlayTemtemCardListener()
     {
-        Debug.Log("Card played: " + card.GetInDeckId());
-
         gameScript.SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         gameScript.SetCurentActionState(actionStateEnum.Select);
 
@@ -171,14 +169,22 @@ public class CardSelectPrefabScript : MonoBehaviour
         gameScript.ToggleView(gameScript.GetCardDetailView(), false);
         gameScript.ToggleView(gameScript.GetSelectActionView(), true);
 
-        //gameScript.DisplayCardListSelectModeSingle(gameScript.GetHandTamer_1(), card.GetInDeckId());
         gameScript.AddcardToSelectionList(card.GetInDeckId());
         gameScript.DisplayCardListSelectModeList(gameScript.GetHandTamer_1());
         gameScript.GetGamePrompt().text = "Select " + cardTemtem.GetPansuns() + " cards to discard from your Hand";
+
+        Debug.Log("Card played: " + card.GetInDeckId());
     }
 
     void SelectCardListener()
     {
+        gameScript.ClearCardButtonsViewDisplay();
+        gameScript.ToggleView(gameScript.GetCardDetailView(), false);
+        gameScript.ToggleView(gameScript.GetSelectActionView(), true);
+
+        gameScript.AddcardToSelectionList(card.GetInDeckId());
+        gameScript.DisplayCardListSelectModeList(gameScript.GetHandTamer_1());
+
         Debug.Log("Card Selected: " + card.GetInDeckId());
     }
 

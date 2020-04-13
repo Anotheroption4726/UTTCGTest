@@ -224,6 +224,8 @@ public class GameScript : MonoBehaviour
     {
         Debug.Log("Action cancelled");
 
+        cardSelection = new List<int>();
+
         SetcurentBrowsingLocation(browsingLocationEnum.Hand);
         SetCurentActionState(actionStateEnum.Play);
 
