@@ -7,6 +7,8 @@ public class Tamer
     private string name;
     private bool advantage;
 
+    private Temtem[] inGameTemtems = new Temtem[6];
+
     private List<Card> backpack;
     private List<Card> trashPile = new List<Card>();
     private List<Card> hand = new List<Card>();
@@ -40,6 +42,33 @@ public class Tamer
     public void ToggleAdvantage()
     {
         advantage = !advantage;
+    }
+
+    public Temtem[] GetInGameTemtems()
+    {
+        return inGameTemtems;
+    }
+
+    public void SetInGameTemtems(Temtem[] arg_temtemsArray)
+    {
+        inGameTemtems = arg_temtemsArray;
+    }
+
+    public void AddTemtemToGame(Temtem arg_temtem)
+    {
+        for (int i = 0; i < inGameTemtems.Length; i++)
+        {
+            if (inGameTemtems[i] == null)
+            {
+                inGameTemtems[i] = arg_temtem;
+                break;
+            }
+        }
+    }
+
+    public void RemoveTemtemFromGame()
+    {
+        
     }
 
     public List<Card> GetBackpack()
