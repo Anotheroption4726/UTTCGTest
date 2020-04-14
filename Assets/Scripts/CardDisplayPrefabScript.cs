@@ -171,7 +171,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
         gameScript.ToggleView(gameScript.GetCardDetailView(), false);
         gameScript.ToggleView(gameScript.GetSelectActionView(), true);
 
-        gameScript.AddcardToSelectionList(card.GetInDeckId());
+        gameScript.AddCardToCardSelectionList(card);
         gameScript.SetCardSelectionTotalCards(cardTemtem.GetPansuns());
         gameScript.SetCardSelectionCurrentCards(0);
 
@@ -195,19 +195,21 @@ public class CardDisplayPrefabScript : MonoBehaviour
         {
             SelectCard(gameScript.GetActiveTamer().GetHand());
 
-            foreach (int cardInDeckId in gameScript.GetcardSelection())
+            foreach (Card loc_card in gameScript.GetCardSelectionList())
             {
-                if (gameScript.GetcardSelection().IndexOf(cardInDeckId) != 0)
+                if (gameScript.GetCardSelectionList().IndexOf(loc_card) != 0)
                 {
-                    gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetActiveTamer().GetHand(), cardInDeckId, gameScript.GetActiveTamer().GetTrashPile());
+                    gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetActiveTamer().GetHand(), loc_card.GetInDeckId(), gameScript.GetActiveTamer().GetTrashPile());
                 }
             }
 
             gameScript.ToggleView(gameScript.GetCardDetailView(), false);
-            gameScript.EndActionSelectionListener();
             gameScript.ToggleView(gameScript.GetLogView(), true);
 
             gameScript.GetGameLog().AddLogText("<b>" + gameScript.GetActiveTamer().GetName() + "</b>" + " played a <b>Temtem</b> Card.", Color.white);
+            gameScript.GetGameLog().AddLogText("<b>" + gameScript.GetCardSelectionList()[0].GetName() + "</b>" + " has entered the <b>Arena</b>.", Color.white);
+
+            gameScript.EndActionSelectionListener();
         }
     }
 
@@ -218,7 +220,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
         gameScript.ToggleView(gameScript.GetLogView(), false);
         gameScript.ToggleView(gameScript.GetSelectActionView(), true);
 
-        gameScript.AddcardToSelectionList(card.GetInDeckId());
+        gameScript.AddCardToCardSelectionList(card);
         gameScript.DisplayCardListSelectModeList(arg_cardList);
     }
 }

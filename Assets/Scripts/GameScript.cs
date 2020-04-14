@@ -37,7 +37,7 @@ public class GameScript : MonoBehaviour
     private actionStateEnum curentActionState;
     private browsingLocationEnum curentBrowsingLocation;
 
-    private List<int> cardSelection = new List<int>();
+    private List<Card> cardSelection = new List<Card>();
     private int cardSelectionTotalCards = 0;
     private int cardSelectionCurrentCards = 0;
 
@@ -127,9 +127,14 @@ public class GameScript : MonoBehaviour
         return curentBrowsingLocation;
     }
 
-    public List<int> GetcardSelection()
+    public List<Card> GetCardSelectionList()
     {
         return cardSelection;
+    }
+
+    public void AddCardToCardSelectionList(Card arg_card)
+    {
+        cardSelection.Add(arg_card);
     }
 
     public int GetCardSelectionTotalCards()
@@ -257,7 +262,7 @@ public class GameScript : MonoBehaviour
     {
         Debug.Log("Action cancelled");
 
-        cardSelection = new List<int>();
+        cardSelection = new List<Card>();
         cardSelectionTotalCards = 0;
         cardSelectionCurrentCards = 0;
 
@@ -416,18 +421,13 @@ public class GameScript : MonoBehaviour
 
     public bool CheckByDeckIdIfCardIsInSelectedCardList(int arg_cardInDeckId)
     {
-        foreach (int lp_cardInDeckId in cardSelection)
+        foreach (Card lp_card in cardSelection)
         {
-            if (lp_cardInDeckId == arg_cardInDeckId)
+            if (lp_card.GetInDeckId() == arg_cardInDeckId)
             {
                 return true;
             }
         }
         return false;
-    }
-
-    public void AddcardToSelectionList(int arg_cardInDeckId)
-    {
-        cardSelection.Add(arg_cardInDeckId);
     }
 }
