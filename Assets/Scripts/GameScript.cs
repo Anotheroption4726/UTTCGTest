@@ -10,6 +10,7 @@ public class GameScript : MonoBehaviour
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject outOfCanvasGameObject;
 
+    [SerializeField] private GameObject logView;
     [SerializeField] private GameObject boardView;
     [SerializeField] private GameObject selectActionView;
 
@@ -17,6 +18,7 @@ public class GameScript : MonoBehaviour
     [SerializeField] private GameObject[] cardDetailViewButtonsTable = new GameObject[TOTAL_CARD_DISPLAY_BUTTONS];
     [SerializeField] private Button[] cardDetailButtonsTable = new Button[TOTAL_CARD_DISPLAY_BUTTONS];
 
+    [SerializeField] private LogScript gameLog;
     [SerializeField] private Text gamePrompt;
 
     [SerializeField] private Button backpackPlayerButton;
@@ -35,7 +37,7 @@ public class GameScript : MonoBehaviour
     private actionStateEnum curentActionState;
     private browsingLocationEnum curentBrowsingLocation;
 
-    private List<int> cardSelection = new List<int>();
+    private List<Card> cardSelection = new List<Card>();
     private int cardSelectionTotalCards = 0;
     private int cardSelectionCurrentCards = 0;
 
@@ -59,6 +61,12 @@ public class GameScript : MonoBehaviour
     {
         return outOfCanvasGameObject;
     }
+
+    public GameObject GetLogView()
+    {
+        return logView;
+    }
+
     public GameObject GetBoardView()
     {
         return boardView;
@@ -89,6 +97,11 @@ public class GameScript : MonoBehaviour
         return gamePrompt;
     }
 
+    public LogScript GetGameLog()
+    {
+        return gameLog;
+    }
+
     public Tamer GetActiveTamer()
     {
         return activeTamer;
@@ -114,9 +127,14 @@ public class GameScript : MonoBehaviour
         return curentBrowsingLocation;
     }
 
-    public List<int> GetcardSelection()
+    public List<Card> GetCardSelectionList()
     {
         return cardSelection;
+    }
+
+    public void AddCardToCardSelectionList(Card arg_card)
+    {
+        cardSelection.Add(arg_card);
     }
 
     public int GetCardSelectionTotalCards()
@@ -154,17 +172,17 @@ public class GameScript : MonoBehaviour
     {
         backpackPlayerButton.onClick.AddListener(() =>
         {
-            SetcurentBrowsingLocation(browsingLocationEnum.Backpack);
+            SetCurentBrowsingLocation(browsingLocationEnum.Backpack);
         });
 
         trashPilePlayerButton.onClick.AddListener(() =>
         {
-            SetcurentBrowsingLocation(browsingLocationEnum.TrashPile);
+            SetCurentBrowsingLocation(browsingLocationEnum.TrashPile);
         });
 
         handPlayerButton.onClick.AddListener(() =>
         {
-            SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+            SetCurentBrowsingLocation(browsingLocationEnum.Hand);
         });
 
         cancelActionButton.onClick.AddListener(EndActionSelectionListener);
@@ -172,12 +190,14 @@ public class GameScript : MonoBehaviour
 
     private void Start()
     {
+        //gameLog.AddLogText("Game Started", Color.white);
+
         activeTamer = new Tamer("Player 1", BackpackSetup());
         ShuffleCardList(activeTamer.GetBackpack());
         DrawCardsFromListAddToOtherList(activeTamer.GetBackpack(), activeTamer.GetHand(), 5, true);
 
         curentActionState = actionStateEnum.Play;
-        SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+        SetCurentBrowsingLocation(browsingLocationEnum.Hand);
 
         MoveSpecificCardFromListToOtherList(activeTamer.GetBackpack(), activeTamer.GetBackpack()[0].GetInDeckId(), activeTamer.GetTrashPile());
         activeTamer.GetTrashPile()[0].SetUncoveredStatus(true);
@@ -188,7 +208,7 @@ public class GameScript : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             DrawCardsFromListAddToOtherList(activeTamer.GetBackpack(), activeTamer.GetHand(), 1, true);
-            SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+            SetCurentBrowsingLocation(browsingLocationEnum.Hand);
         }
     }
 
@@ -203,7 +223,7 @@ public class GameScript : MonoBehaviour
     //  _____ Navigation & display Functions _____
     //
 
-    public void SetcurentBrowsingLocation(browsingLocationEnum arg_rowsingLocation)
+    public void SetCurentBrowsingLocation(browsingLocationEnum arg_rowsingLocation)
     {
         if (arg_rowsingLocation == browsingLocationEnum.Hand)
         {
@@ -242,15 +262,16 @@ public class GameScript : MonoBehaviour
     {
         Debug.Log("Action cancelled");
 
-        cardSelection = new List<int>();
+        cardSelection = new List<Card>();
         cardSelectionTotalCards = 0;
         cardSelectionCurrentCards = 0;
 
-        SetcurentBrowsingLocation(browsingLocationEnum.Hand);
+        SetCurentBrowsingLocation(browsingLocationEnum.Hand);
         SetCurentActionState(actionStateEnum.Play);
 
         ClearCardButtonsViewDisplay();
         ToggleView(selectActionView, false);
+        ToggleView(GetLogView(), true);
         ToggleView(boardView, true);
     }
 
@@ -400,18 +421,13 @@ public class GameScript : MonoBehaviour
 
     public bool CheckByDeckIdIfCardIsInSelectedCardList(int arg_cardInDeckId)
     {
-        foreach (int lp_cardInDeckId in cardSelection)
+        foreach (Card lp_card in cardSelection)
         {
-            if (lp_cardInDeckId == arg_cardInDeckId)
+            if (lp_card.GetInDeckId() == arg_cardInDeckId)
             {
                 return true;
             }
         }
         return false;
-    }
-
-    public void AddcardToSelectionList(int arg_cardInDeckId)
-    {
-        cardSelection.Add(arg_cardInDeckId);
     }
 }
