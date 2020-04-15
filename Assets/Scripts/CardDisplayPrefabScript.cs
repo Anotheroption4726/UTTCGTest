@@ -79,7 +79,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
 
         if (gameScript.GetcurentBrowsingLocation() == browsingLocationEnum.Hand)
         {
-            if (gameScript.GetcurentActionState() == actionStateEnum.Play)
+            if (gameScript.GetCurrentActionState() == actionStateEnum.Play)
             {
                 SetupButtonView(0, "Close");
                 gameScript.GetCardDetailButtonsTable()[0].onClick.AddListener(CloseCardDetailListener);
@@ -88,7 +88,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
                 gameScript.GetCardDetailButtonsTable()[1].onClick.AddListener(PlayTemtemCardListener);
             }
 
-            if (gameScript.GetcurentActionState() == actionStateEnum.Select)
+            if (gameScript.GetCurrentActionState() == actionStateEnum.Select)
             {
                 SetupButtonView(0, "Close");
                 gameScript.GetCardDetailButtonsTable()[0].onClick.AddListener(CloseCardDetailListener);
@@ -100,7 +100,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
 
         if (gameScript.GetcurentBrowsingLocation() == browsingLocationEnum.TrashPile)
         {
-            if (gameScript.GetcurentActionState() == actionStateEnum.Play)
+            if (gameScript.GetCurrentActionState() == actionStateEnum.Play)
             {
                 SetupButtonView(0, "Close");
                 gameScript.GetCardDetailButtonsTable()[0].onClick.AddListener(CloseCardDetailListener);
@@ -150,13 +150,13 @@ public class CardDisplayPrefabScript : MonoBehaviour
         gameScript.ClearCardButtonsViewDisplay();
         gameScript.ToggleView(gameScript.GetCardDetailView(), false);
 
-        if (gameScript.GetcurentActionState() == actionStateEnum.Play)
+        if (gameScript.GetCurrentActionState() == actionStateEnum.Play)
         {
             gameScript.ToggleView(gameScript.GetLogView(), true);
             gameScript.ToggleView(gameScript.GetBoardView(), true);
         }
 
-        if (gameScript.GetcurentActionState() == actionStateEnum.Select)
+        if (gameScript.GetCurrentActionState() == actionStateEnum.Select)
         {
             gameScript.ToggleView(gameScript.GetSelectActionView(), true);
         }
@@ -165,7 +165,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
     void PlayTemtemCardListener()
     {
         gameScript.SetCurentBrowsingLocation(browsingLocationEnum.Hand);
-        gameScript.SetCurentActionState(actionStateEnum.Select);
+        gameScript.SetCurrentActionState(actionStateEnum.Select);
 
         gameScript.ClearCardButtonsViewDisplay();
         gameScript.ToggleView(gameScript.GetCardDetailView(), false);
@@ -175,7 +175,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
         gameScript.SetCardSelectionTotalCards(cardTemtem.GetPansuns());
         gameScript.SetCardSelectionCurrentCards(0);
 
-        gameScript.DisplayCardListSelectModeList(gameScript.GetActiveTamer().GetHand());
+        gameScript.DisplayCardListSelectModeList(gameScript.GetPlayer().GetHand());
         gameScript.GetGamePrompt().text = "Select " + gameScript.GetCardSelectionTotalCards() + " cards from your Hand (" + gameScript.GetCardSelectionCurrentCards() + "/" + gameScript.GetCardSelectionTotalCards() + ")";
         
         Debug.Log("Playing Card: " + card.GetInDeckId());
@@ -185,7 +185,7 @@ public class CardDisplayPrefabScript : MonoBehaviour
     {
         if (gameScript.GetCardSelectionCurrentCards() < gameScript.GetCardSelectionTotalCards() - 1)
         {
-            SelectCard(gameScript.GetActiveTamer().GetHand());
+            SelectCard(gameScript.GetPlayer().GetHand());
             gameScript.SetCardSelectionCurrentCards(gameScript.GetCardSelectionCurrentCards() + 1);
 
             gameScript.GetGamePrompt().text = "Select " + gameScript.GetCardSelectionTotalCards() + " cards from your Hand (" + gameScript.GetCardSelectionCurrentCards() + "/" + gameScript.GetCardSelectionTotalCards() + ")";
@@ -193,23 +193,34 @@ public class CardDisplayPrefabScript : MonoBehaviour
         }
         else
         {
-            SelectCard(gameScript.GetActiveTamer().GetHand());
+            SelectCard(gameScript.GetPlayer().GetHand());
 
             foreach (Card loc_card in gameScript.GetCardSelectionList())
             {
                 if (gameScript.GetCardSelectionList().IndexOf(loc_card) != 0)
                 {
-                    gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetActiveTamer().GetHand(), loc_card.GetInDeckId(), gameScript.GetActiveTamer().GetTrashPile());
+                    gameScript.MoveSpecificCardFromListToOtherList(gameScript.GetPlayer().GetHand(), loc_card.GetInDeckId(), gameScript.GetPlayer().GetTrashPile());
                 }
             }
+
+            Card_Temtem loc_playedCard = (Card_Temtem) gameScript.GetCardSelectionList()[0];
+            Temtem loc_newTemtem = new Temtem(loc_playedCard);
+            gameScript.GetPlayer().AddTemtemToGame(loc_newTemtem);
+            
+            InGameTemtemButtonScript loc_newInGameTemtemButton = gameScript.GetPlayerInGameTemtemButton(loc_newTemtem.GetInGameIndex()).GetComponent<InGameTemtemButtonScript>();
+            loc_newInGameTemtemButton.SetTemtem(loc_newTemtem);
 
             gameScript.ToggleView(gameScript.GetCardDetailView(), false);
             gameScript.ToggleView(gameScript.GetLogView(), true);
 
-            gameScript.GetGameLog().AddLogText("<b>" + gameScript.GetActiveTamer().GetName() + "</b>" + " played a <b>Temtem</b> Card.", Color.white);
-            gameScript.GetGameLog().AddLogText("<b>" + gameScript.GetCardSelectionList()[0].GetName() + "</b>" + " has entered the <b>Arena</b>.", Color.white);
+            gameScript.GetGameLog().AddLogText("<b>" + gameScript.GetPlayer().GetName() + "</b>" + " played a <b>Temtem</b> Card.", Color.white);
+            gameScript.GetGameLog().AddLogText("<b>" + loc_playedCard.GetName() + "</b>" + " has entered the <b>Arena</b>.", Color.white);
 
+            gameScript.GetPlayer().GetHand().Remove(gameScript.GetCardSelectionList()[0]);
+            gameScript.GetCardSelectionList().RemoveAt(0);
             gameScript.EndActionSelectionListener();
+
+            gameScript.SetCurentBrowsingLocation(browsingLocationEnum.Hand);
         }
     }
 

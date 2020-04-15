@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class GameScript : MonoBehaviour
 {
     private const int TOTAL_CARD_DISPLAY_BUTTONS = 2;
+    private const int TOTAL_IN_GAME_TEMTEMS = 6;
 
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject outOfCanvasGameObject;
@@ -21,6 +22,8 @@ public class GameScript : MonoBehaviour
     [SerializeField] private LogScript gameLog;
     [SerializeField] private Text gamePrompt;
 
+    [SerializeField] private GameObject[] playerInGameTemtemButtons = new GameObject[TOTAL_IN_GAME_TEMTEMS];
+
     [SerializeField] private Button backpackPlayerButton;
     [SerializeField] private Button trashPilePlayerButton;
     [SerializeField] private Button handPlayerButton;
@@ -31,8 +34,8 @@ public class GameScript : MonoBehaviour
 
     private int cardInDeckIdCount = 0;
 
-    private Tamer activeTamer;
-    private Tamer passiveTamer;
+    private Tamer player;
+    private Tamer opponent;
 
     private actionStateEnum curentActionState;
     private browsingLocationEnum curentBrowsingLocation;
@@ -102,22 +105,27 @@ public class GameScript : MonoBehaviour
         return gameLog;
     }
 
-    public Tamer GetActiveTamer()
+    public Tamer GetPlayer()
     {
-        return activeTamer;
+        return player;
     }
 
-    public Tamer GetPassiveTamer()
+    public GameObject GetPlayerInGameTemtemButton (int arg_PlayerInGameTemtemIndex)
     {
-        return passiveTamer;
+        return playerInGameTemtemButtons[arg_PlayerInGameTemtemIndex];
     }
 
-    public actionStateEnum GetcurentActionState()
+    public Tamer GetOpponent()
+    {
+        return opponent;
+    }
+
+    public actionStateEnum GetCurrentActionState()
     {
         return curentActionState;
     }
 
-    public void SetCurentActionState(actionStateEnum arg_actionState)
+    public void SetCurrentActionState(actionStateEnum arg_actionState)
     {
         curentActionState = arg_actionState;
     }
@@ -192,22 +200,22 @@ public class GameScript : MonoBehaviour
     {
         //gameLog.AddLogText("Game Started", Color.white);
 
-        activeTamer = new Tamer("Player 1", BackpackSetup());
-        ShuffleCardList(activeTamer.GetBackpack());
-        DrawCardsFromListAddToOtherList(activeTamer.GetBackpack(), activeTamer.GetHand(), 5, true);
+        player = new Tamer("Player 1", BackpackSetup());
+        ShuffleCardList(player.GetBackpack());
+        DrawCardsFromListAddToOtherList(player.GetBackpack(), player.GetHand(), 5, true);
 
         curentActionState = actionStateEnum.Play;
         SetCurentBrowsingLocation(browsingLocationEnum.Hand);
 
-        MoveSpecificCardFromListToOtherList(activeTamer.GetBackpack(), activeTamer.GetBackpack()[0].GetInDeckId(), activeTamer.GetTrashPile());
-        activeTamer.GetTrashPile()[0].SetUncoveredStatus(true);
+        MoveSpecificCardFromListToOtherList(player.GetBackpack(), player.GetBackpack()[0].GetInDeckId(), player.GetTrashPile());
+        player.GetTrashPile()[0].SetUncoveredStatus(true);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown("space"))
         {
-            DrawCardsFromListAddToOtherList(activeTamer.GetBackpack(), activeTamer.GetHand(), 1, true);
+            DrawCardsFromListAddToOtherList(player.GetBackpack(), player.GetHand(), 1, true);
             SetCurentBrowsingLocation(browsingLocationEnum.Hand);
         }
     }
@@ -227,20 +235,20 @@ public class GameScript : MonoBehaviour
     {
         if (arg_rowsingLocation == browsingLocationEnum.Hand)
         {
-            gamePrompt.text = "Hand : " + activeTamer.GetHand().Count + " Card(s)";
-            DisplayCardListPlayMode(activeTamer.GetHand());
+            gamePrompt.text = "Hand : " + player.GetHand().Count + " Card(s)";
+            DisplayCardListPlayMode(player.GetHand());
         }
 
         if (arg_rowsingLocation == browsingLocationEnum.Backpack)
         {
-            gamePrompt.text = "Backpack : " + activeTamer.GetBackpack().Count + " Card(s)";
-            DisplayCardListPlayMode(activeTamer.GetBackpack());
+            gamePrompt.text = "Backpack : " + player.GetBackpack().Count + " Card(s)";
+            DisplayCardListPlayMode(player.GetBackpack());
         }
 
         if (arg_rowsingLocation == browsingLocationEnum.TrashPile)
         {
-            gamePrompt.text = "Trash Pile : " + activeTamer.GetTrashPile().Count + " Card(s)";
-            DisplayCardListPlayMode(activeTamer.GetTrashPile());
+            gamePrompt.text = "Trash Pile : " + player.GetTrashPile().Count + " Card(s)";
+            DisplayCardListPlayMode(player.GetTrashPile());
         }
 
         curentBrowsingLocation = arg_rowsingLocation;
@@ -267,7 +275,7 @@ public class GameScript : MonoBehaviour
         cardSelectionCurrentCards = 0;
 
         SetCurentBrowsingLocation(browsingLocationEnum.Hand);
-        SetCurentActionState(actionStateEnum.Play);
+        SetCurrentActionState(actionStateEnum.Play);
 
         ClearCardButtonsViewDisplay();
         ToggleView(selectActionView, false);

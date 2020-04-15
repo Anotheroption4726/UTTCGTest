@@ -61,6 +61,7 @@ public class Tamer
             if (inGameTemtems[i] == null)
             {
                 inGameTemtems[i] = arg_temtem;
+                inGameTemtems[i].SetInGameIndex(i);
                 break;
             }
         }
